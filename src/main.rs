@@ -32,8 +32,15 @@ fn main() -> ExitCode {
 
     let fs = RealFs;
     let outcome = match cli.command {
-        Command::Status => status::run(&context, &fs),
-        Command::Apply { dry_run } => apply::run(&context, &backup_suffix(), dry_run, &fs, &fs),
+        Command::Status { scope } => status::run(&context, scope.into(), &fs),
+        Command::Apply { dry_run, scope } => {
+            let options = apply::Options {
+                selection: scope.into(),
+                suffix: &backup_suffix(),
+                dry_run,
+            };
+            apply::run(&context, options, &fs, &fs)
+        }
         Command::Packages { action } => {
             let inventory = SystemPackages;
             match action {

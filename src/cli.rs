@@ -1,4 +1,5 @@
-use clap::{Parser, Subcommand};
+use crate::domain::selection::Selection;
+use clap::{Parser, Subcommand, ValueEnum};
 use std::path::PathBuf;
 
 #[derive(Parser)]
@@ -17,10 +18,16 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Command {
-    Status,
+    Status {
+        #[arg(long, value_enum, default_value_t = ScopeArg::User)]
+        scope: ScopeArg,
+    },
     Apply {
         #[arg(long)]
         dry_run: bool,
+
+        #[arg(long, value_enum, default_value_t = ScopeArg::User)]
+        scope: ScopeArg,
     },
     Capture,
     Packages {
@@ -34,4 +41,21 @@ pub enum PackagesAction {
     Capture,
     Status,
     Install,
+}
+
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub enum ScopeArg {
+    User,
+    System,
+    All,
+}
+
+impl From<ScopeArg> for Selection {
+    fn from(arg: ScopeArg) -> Self {
+        match arg {
+            ScopeArg::User => Selection::User,
+            ScopeArg::System => Selection::System,
+            ScopeArg::All => Selection::All,
+        }
+    }
 }

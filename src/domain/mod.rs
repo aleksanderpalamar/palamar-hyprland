@@ -10,6 +10,7 @@ pub mod manifest;
 pub mod packages;
 pub mod planner;
 pub mod report;
+pub mod selection;
 pub mod state;
 
 pub use action::Action;
@@ -17,4 +18,5 @@ pub use applier::apply;
 pub use entry::{Entry, Scope};
 pub use planner::{PlannedEntry, pending, plan};
 pub use report::{Outcome, Report};
+pub use selection::{Selection, filter};
 pub use state::TargetState;

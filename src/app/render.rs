@@ -1,6 +1,7 @@
 use crate::domain::action::Action;
 use crate::domain::planner::PlannedEntry;
 use crate::domain::report::{Outcome, Report};
+use crate::domain::selection::Selection;
 use std::path::Path;
 
 pub fn shorten(path: &Path, home: &Path) -> String {
@@ -45,6 +46,20 @@ pub fn outcome_line(report: &Report, home: &Path) -> String {
     }
 }
 
+pub fn skipped_note(count: usize, selection: Selection) -> Option<String> {
+    if count == 0 {
+        return None;
+    }
+
+    let hint = match selection {
+        Selection::User => "use --scope system com sudo",
+        Selection::System => "use --scope user",
+        Selection::All => return None,
+    };
+
+    Some(format!("{count} entradas fora do escopo ({hint})"))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -85,6 +100,23 @@ mod tests {
             describe(&planned[0], &home()),
             "criar         ~/.config/mako/config"
         );
+    }
+
+    #[test]
+    fn no_note_when_nothing_was_skipped() {
+        assert!(skipped_note(0, Selection::User).is_none());
+    }
+
+    #[test]
+    fn user_scope_points_to_system_scope() {
+        let note = skipped_note(2, Selection::User).expect("nota");
+        assert!(note.contains("--scope system"));
+        assert!(note.starts_with("2 entradas"));
+    }
+
+    #[test]
+    fn all_scope_never_skips() {
+        assert!(skipped_note(3, Selection::All).is_none());
     }
 
     #[test]

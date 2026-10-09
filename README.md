@@ -23,6 +23,7 @@ ele por symlink.
 palamar-hyprland status              # o que está fora de sincronia
 palamar-hyprland apply --dry-run     # mostra sem alterar
 palamar-hyprland apply               # cria os symlinks (backup do que existir)
+palamar-hyprland apply --scope all   # inclui /etc e /usr/share (precisa de root)
 palamar-hyprland capture             # traz as configs do sistema para o repo
 palamar-hyprland packages status     # pacotes faltando
 palamar-hyprland packages install    # instala os que faltam
@@ -30,6 +31,10 @@ palamar-hyprland packages capture    # regenera as listas
 ```
 
 `apply` nunca sobrescreve: um arquivo existente vira `<nome>.bak.<epoch>` antes do link.
+
+O escopo padrão é `user`: um `apply` comum só mexe no `$HOME` e avisa quantas
+entradas de sistema deixou de fora. `--scope system` faz só essas, e `--scope all`
+faz as duas.
 
 ## Máquina nova
 
@@ -63,7 +68,7 @@ palamar-hyprland packages capture    # regenera as listas
 5. **Parte de sistema** (precisa de root)
 
    ```
-   sudo --preserve-env=HOME ./target/release/palamar-hyprland apply
+   sudo --preserve-env=HOME ./target/release/palamar-hyprland apply --scope system
    ```
 
 6. **Tema do SDDM** — ver `system/sddm-theme.txt`
