@@ -442,7 +442,6 @@ bind("SUPER + SHIFT + A",            "ChatGPT",                         "gtk-lau
 bind("SUPER + E",                    "Gerenciador de arquivos",         fileManager)
 bind("SUPER + B",                    "Navegador",                       browser)
 bind("SUPER + M",                    "Aplicativos por categoria",       menu)
-bind("SUPER + H",                    "Encerrar sessão (hyprshutdown)",  "hyprshutdown")
 bind("SUPER + R",                    "Recarregar Hyprland e waybar",    "sh -c 'hyprctl reload; pkill -SIGUSR2 waybar'")
 bind("SUPER + SHIFT + H",            "Alternar SDR/HDR",                bin .. "hypr-hdr-toggle")
 
