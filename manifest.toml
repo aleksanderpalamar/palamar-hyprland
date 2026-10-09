@@ -229,6 +229,51 @@ target = "~/.config/hypr/hyprpaper.conf"
 scope = "user"
 
 [[entry]]
+source = "config/hypr-theme/templates/btop.theme.tpl"
+target = "~/.config/hypr-theme/templates/btop.theme.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/fuzzel.ini.tpl"
+target = "~/.config/hypr-theme/templates/fuzzel.ini.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/hyprland.lua.tpl"
+target = "~/.config/hypr-theme/templates/hyprland.lua.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/hyprlock.conf.tpl"
+target = "~/.config/hypr-theme/templates/hyprlock.conf.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/kitty.conf.tpl"
+target = "~/.config/hypr-theme/templates/kitty.conf.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/mako.ini.tpl"
+target = "~/.config/hypr-theme/templates/mako.ini.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/quickshell.json.tpl"
+target = "~/.config/hypr-theme/templates/quickshell.json.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/vscode-theme.json.tpl"
+target = "~/.config/hypr-theme/templates/vscode-theme.json.tpl"
+scope = "user"
+
+[[entry]]
+source = "config/hypr-theme/templates/waybar.css.tpl"
+target = "~/.config/hypr-theme/templates/waybar.css.tpl"
+scope = "user"
+
+[[entry]]
 source = "config/kitty/kitty.conf"
 target = "~/.config/kitty/kitty.conf"
 scope = "user"

@@ -5,7 +5,6 @@ REPO_URL="${PALAMAR_HYPRLAND_URL:-https://github.com/aleksanderpalamar/palamar-h
 REPO_DIR="${PALAMAR_HYPRLAND_DIR:-$HOME/Projetos/palamar-hyprland}"
 SDDM_THEME_URL="https://github.com/JaKooLit/simple-sddm-2.git"
 SDDM_THEME_DIR="/usr/share/sddm/themes/simple_sddm_2"
-THEMES_DIR="$HOME/.local/share/hypr-themes"
 OMZ_DIR="$HOME/.oh-my-zsh"
 
 DRY_RUN=0
@@ -98,6 +97,11 @@ refresh_fonts() {
     run fc-cache -f
 }
 
+ensure_theme() {
+    step "Tema atual"
+    run "$HOME/.local/bin/hypr-theme" refresh
+}
+
 ensure_sddm_theme() {
     step "Tema do SDDM"
     if [[ -d $SDDM_THEME_DIR/.git ]]; then
@@ -148,6 +152,7 @@ main() {
     ensure_shell
     link_user_configs
     refresh_fonts
+    ensure_theme
     ensure_sddm_theme
     link_system_configs
     enable_sddm

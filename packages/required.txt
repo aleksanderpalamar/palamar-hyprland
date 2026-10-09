@@ -4,3 +4,4 @@ noto-fonts
 zenity
 libnotify
 nm-connection-editor
+python

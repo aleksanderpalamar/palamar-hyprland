@@ -110,6 +110,7 @@ pipewire-pulse
 playerctl
 power-profiles-daemon
 protontricks
+python
 python-build
 python-imageio
 python-installer

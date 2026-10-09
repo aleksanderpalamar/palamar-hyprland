@@ -3,6 +3,7 @@ include = [
   "~/.config/hypr/hypridle.conf",
   "~/.config/hypr/hyprlock.conf",
   "~/.config/hypr/hyprpaper.conf",
+  "~/.config/hypr-theme",
   "~/.config/waybar",
   "~/.config/mako",
   "~/.config/fuzzel",
