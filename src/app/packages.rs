@@ -6,6 +6,7 @@ use std::path::PathBuf;
 
 pub const DIR: &str = "packages";
 pub const IGNORE: &str = "ignore.txt";
+pub const REQUIRED: &str = "required.txt";
 
 fn list_path(context: &Context, origin: Origin) -> PathBuf {
     context.repo().join(DIR).join(origin.file_name())
@@ -13,6 +14,13 @@ fn list_path(context: &Context, origin: Origin) -> PathBuf {
 
 fn read_ignored(context: &Context) -> Vec<String> {
     match fs::read_to_string(context.repo().join(DIR).join(IGNORE)) {
+        Ok(contents) => parse(&contents),
+        Err(_) => Vec::new(),
+    }
+}
+
+fn read_required(context: &Context) -> Vec<String> {
+    match fs::read_to_string(context.repo().join(DIR).join(REQUIRED)) {
         Ok(contents) => parse(&contents),
         Err(_) => Vec::new(),
     }
@@ -35,14 +43,18 @@ pub fn capture(context: &Context, inventory: &dyn PackageInventory) -> Result<bo
         let installed = inventory
             .installed(origin)
             .map_err(|error| ContextError::Unreadable(list_path(context, origin), error))?;
-        let kept = without(&installed, &ignored);
+        let mut found = installed.clone();
+        if origin == Origin::Repository {
+            found.extend(read_required(context));
+        }
+        let kept = without(&found, &ignored);
         let path = list_path(context, origin);
         fs::write(&path, render(&kept)).map_err(|error| ContextError::Unreadable(path, error))?;
         println!(
             "{:<12} {} pacotes ({} ignorados)",
             origin.file_name(),
             kept.len(),
-            installed.len() - kept.len()
+            found.len() - kept.len()
         );
     }
 
