@@ -301,13 +301,28 @@ hl.gesture({
 
 local bin = "/home/palamar/.local/bin/"
 
+local shortcuts = {}
+
 local function bind(keys, description, action, opts)
     opts = opts or {}
     opts.description = description
+    shortcuts[#shortcuts + 1] = keys .. "\t" .. description
     if type(action) == "string" then
         action = hl.dsp.exec_cmd(action)
     end
     hl.bind(keys, action, opts)
+end
+
+local function write_shortcuts()
+    local state = os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")
+    local folder = state .. "/hypr"
+    os.execute("mkdir -p " .. string.format("%q", folder))
+    local file = io.open(folder .. "/keybindings.tsv", "w")
+    if not file then
+        return
+    end
+    file:write(table.concat(shortcuts, "\n"), "\n")
+    file:close()
 end
 
 local function has_tag(window, wanted)
@@ -582,6 +597,8 @@ bind("XF86AudioPause",               "Pausar",                          "playerc
 bind("XF86AudioPlay",                "Tocar",                           "playerctl play-pause", { locked = true })
 bind("XF86AudioPrev",                "Faixa anterior",                  "playerctl previous",   { locked = true })
 bind("ALT + SHIFT + XF86AudioPlay",  "Faixa anterior",                  "playerctl previous",   { locked = true })
+
+pcall(write_shortcuts)
 
 
 --------------------------------

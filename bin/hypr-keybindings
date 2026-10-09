@@ -1,27 +1,41 @@
 #!/usr/bin/env bash
 
 # Lista os atalhos do Hyprland que têm descrição (SUPER + K), como o
-# "Keybindings" do Omarchy. As descrições vêm do bind() no hyprland.lua.
+# "Keybindings" do Omarchy. A lista vem do arquivo que o bind() do hyprland.lua
+# grava, e não do hyprctl: ele devolve a tecla vazia nos binds com code:NN.
 set -u
 
-hyprctl binds -j | jq -r '
-    def mods:
-        [ (if (.modmask / 64 | floor) % 2 == 1 then "SUPER" else empty end),
-          (if (.modmask / 4  | floor) % 2 == 1 then "CTRL"  else empty end),
-          (if (.modmask / 8  | floor) % 2 == 1 then "ALT"   else empty end),
-          (if  .modmask              % 2 == 1 then "SHIFT" else empty end) ];
-    def keyname:
-        if   .key == "code:49" then ([39] | implode)
-        elif .key == "code:20" then "-"
-        elif .key == "code:21" then "="
-        elif (.key | test("^code:1[0-9]$")) then ((.key[5:] | tonumber) - 9) % 10 | tostring
-        elif .key == "mouse:272" then "botão esquerdo"
-        elif .key == "mouse:273" then "botão direito"
-        elif .key == "mouse_down" then "rolar para baixo"
-        elif .key == "mouse_up" then "rolar para cima"
-        else .key end;
-    .[] | select(.has_description)
-        | ((mods + [keyname]) | join(" + ")) as $combo
-        | "\($combo)\t\(.description)"
-' | awk -F'\t' '!seen[$0]++ { printf "%-34s  %s\n", $1, $2 }' |
-    fuzzel --dmenu --prompt "Atalhos  " --width 80 --lines 18 --font "JetBrainsMono Nerd Font:size=11" >/dev/null
+state=${XDG_STATE_HOME:-$HOME/.local/state}
+list=$state/hypr/keybindings.tsv
+
+menu() {
+    fuzzel --dmenu --prompt "Atalhos  " --width 80 --lines "$1" \
+        --font "JetBrainsMono Nerd Font:size=11" >/dev/null
+}
+
+if [[ ! -r $list ]]; then
+    printf '%s\n' "Lista indisponível — recarregue o Hyprland (SUPER + R)." | menu 1
+    exit 0
+fi
+
+awk -F'\t' '
+    function keyname(key) {
+        if (key == "code:49") return "\47"
+        if (key == "code:20") return "-"
+        if (key == "code:21") return "="
+        if (key ~ /^code:1[0-9]$/) return (substr(key, 6) - 9) % 10
+        if (key == "mouse:272") return "botão esquerdo"
+        if (key == "mouse:273") return "botão direito"
+        if (key == "mouse_down") return "rolar para baixo"
+        if (key == "mouse_up") return "rolar para cima"
+        return key
+    }
+    {
+        n = split($1, parts, / *\+ */)
+        combo = ""
+        for (i = 1; i <= n; i++) {
+            combo = combo (i == 1 ? "" : " + ") (i == n ? keyname(parts[i]) : parts[i])
+        }
+        if (!seen[combo FS $2]++) printf "%-34s  %s\n", combo, $2
+    }
+' "$list" | menu 18
