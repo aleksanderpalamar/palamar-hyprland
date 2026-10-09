@@ -1,1389 +1,280 @@
-[[entry]]
-source = "system/etc/locale.conf"
-target = "/etc/locale.conf"
-scope = "system"
-
-[[entry]]
-source = "system/etc/sddm.conf"
-target = "/etc/sddm.conf"
-scope = "system"
-
-[[entry]]
-source = "system/etc/vconsole.conf"
-target = "/etc/vconsole.conf"
-scope = "system"
-
-[[entry]]
-source = "home/.bashrc"
-target = "~/.bashrc"
-scope = "user"
-
-[[entry]]
-source = "config/Kvantum/kvantum.kvconfig"
-target = "~/.config/Kvantum/kvantum.kvconfig"
-scope = "user"
-
-[[entry]]
-source = "config/btop/btop.conf"
-target = "~/.config/btop/btop.conf"
-scope = "user"
-
-[[entry]]
-source = "config/btop/themes/hypr-theme.theme"
-target = "~/.config/btop/themes/hypr-theme.theme"
-scope = "user"
-
-[[entry]]
-source = "config/btop/themes/omarchy-tokyo-night.theme"
-target = "~/.config/btop/themes/omarchy-tokyo-night.theme"
-scope = "user"
-
-[[entry]]
-source = "config/fuzzel/fuzzel.ini"
-target = "~/.config/fuzzel/fuzzel.ini"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-active.svg"
-target = "~/.config/gtk-3.0/assets/close-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-backdrop-active.svg"
-target = "~/.config/gtk-3.0/assets/close-backdrop-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-backdrop-hover.svg"
-target = "~/.config/gtk-3.0/assets/close-backdrop-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-backdrop-normal.svg"
-target = "~/.config/gtk-3.0/assets/close-backdrop-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-hover.svg"
-target = "~/.config/gtk-3.0/assets/close-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/close-normal.svg"
-target = "~/.config/gtk-3.0/assets/close-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-active.svg"
-target = "~/.config/gtk-3.0/assets/maximize-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-backdrop-active.svg"
-target = "~/.config/gtk-3.0/assets/maximize-backdrop-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-backdrop-hover.svg"
-target = "~/.config/gtk-3.0/assets/maximize-backdrop-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-backdrop-normal.svg"
-target = "~/.config/gtk-3.0/assets/maximize-backdrop-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-hover.svg"
-target = "~/.config/gtk-3.0/assets/maximize-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximize-normal.svg"
-target = "~/.config/gtk-3.0/assets/maximize-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-active.svg"
-target = "~/.config/gtk-3.0/assets/maximized-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-backdrop-active.svg"
-target = "~/.config/gtk-3.0/assets/maximized-backdrop-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-backdrop-hover.svg"
-target = "~/.config/gtk-3.0/assets/maximized-backdrop-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-backdrop-normal.svg"
-target = "~/.config/gtk-3.0/assets/maximized-backdrop-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-hover.svg"
-target = "~/.config/gtk-3.0/assets/maximized-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/maximized-normal.svg"
-target = "~/.config/gtk-3.0/assets/maximized-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-active.svg"
-target = "~/.config/gtk-3.0/assets/minimize-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-backdrop-active.svg"
-target = "~/.config/gtk-3.0/assets/minimize-backdrop-active.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-backdrop-hover.svg"
-target = "~/.config/gtk-3.0/assets/minimize-backdrop-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-backdrop-normal.svg"
-target = "~/.config/gtk-3.0/assets/minimize-backdrop-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-hover.svg"
-target = "~/.config/gtk-3.0/assets/minimize-hover.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/assets/minimize-normal.svg"
-target = "~/.config/gtk-3.0/assets/minimize-normal.svg"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/bookmarks"
-target = "~/.config/gtk-3.0/bookmarks"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/colors.css"
-target = "~/.config/gtk-3.0/colors.css"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/gtk.css"
-target = "~/.config/gtk-3.0/gtk.css"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/settings.ini"
-target = "~/.config/gtk-3.0/settings.ini"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-3.0/window_decorations.css"
-target = "~/.config/gtk-3.0/window_decorations.css"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-4.0/colors.css"
-target = "~/.config/gtk-4.0/colors.css"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-4.0/gtk.css"
-target = "~/.config/gtk-4.0/gtk.css"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-4.0/settings.ini"
-target = "~/.config/gtk-4.0/settings.ini"
-scope = "user"
-
-[[entry]]
-source = "config/gtk-4.0/window_decorations.css"
-target = "~/.config/gtk-4.0/window_decorations.css"
-scope = "user"
-
-[[entry]]
-source = "config/hypr/hypridle.conf"
-target = "~/.config/hypr/hypridle.conf"
-scope = "user"
-
-[[entry]]
-source = "config/hypr/hyprland.lua"
-target = "~/.config/hypr/hyprland.lua"
-scope = "user"
-
-[[entry]]
-source = "config/hypr/hyprlock.conf"
-target = "~/.config/hypr/hyprlock.conf"
-scope = "user"
-
-[[entry]]
-source = "config/hypr/hyprpaper.conf"
-target = "~/.config/hypr/hyprpaper.conf"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/btop.theme.tpl"
-target = "~/.config/hypr-theme/templates/btop.theme.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/fuzzel.ini.tpl"
-target = "~/.config/hypr-theme/templates/fuzzel.ini.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/hyprland.lua.tpl"
-target = "~/.config/hypr-theme/templates/hyprland.lua.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/hyprlock.conf.tpl"
-target = "~/.config/hypr-theme/templates/hyprlock.conf.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/kitty.conf.tpl"
-target = "~/.config/hypr-theme/templates/kitty.conf.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/mako.ini.tpl"
-target = "~/.config/hypr-theme/templates/mako.ini.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/quickshell.json.tpl"
-target = "~/.config/hypr-theme/templates/quickshell.json.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/vscode-theme.json.tpl"
-target = "~/.config/hypr-theme/templates/vscode-theme.json.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/hypr-theme/templates/waybar.css.tpl"
-target = "~/.config/hypr-theme/templates/waybar.css.tpl"
-scope = "user"
-
-[[entry]]
-source = "config/kitty/kitty.conf"
-target = "~/.config/kitty/kitty.conf"
-scope = "user"
-
-[[entry]]
-source = "config/mako/config"
-target = "~/.config/mako/config"
-scope = "user"
-
-[[entry]]
-source = "config/mimeapps.list"
-target = "~/.config/mimeapps.list"
-scope = "user"
-
-[[entry]]
-source = "config/qt6ct/qt6ct.conf"
-target = "~/.config/qt6ct/qt6ct.conf"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/.qmlls.ini"
-target = "~/.config/quickshell/palamar/.qmlls.ini"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/ActionTile.qml"
-target = "~/.config/quickshell/palamar/ActionTile.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/AudioPanel.qml"
-target = "~/.config/quickshell/palamar/AudioPanel.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/BluetoothPanel.qml"
-target = "~/.config/quickshell/palamar/BluetoothPanel.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/CalendarPanel.qml"
-target = "~/.config/quickshell/palamar/CalendarPanel.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/DisplayPanel.qml"
-target = "~/.config/quickshell/palamar/DisplayPanel.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/ImagePicker.qml"
-target = "~/.config/quickshell/palamar/ImagePicker.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/NetworkPanel.qml"
-target = "~/.config/quickshell/palamar/NetworkPanel.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/PanelButton.qml"
-target = "~/.config/quickshell/palamar/PanelButton.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/PanelHero.qml"
-target = "~/.config/quickshell/palamar/PanelHero.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/PanelRow.qml"
-target = "~/.config/quickshell/palamar/PanelRow.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/PanelSlider.qml"
-target = "~/.config/quickshell/palamar/PanelSlider.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/RoundButton.qml"
-target = "~/.config/quickshell/palamar/RoundButton.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/SectionHeader.qml"
-target = "~/.config/quickshell/palamar/SectionHeader.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/Theme.qml"
-target = "~/.config/quickshell/palamar/Theme.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/ToggleSwitch.qml"
-target = "~/.config/quickshell/palamar/ToggleSwitch.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/palamar/shell.qml"
-target = "~/.config/quickshell/palamar/shell.qml"
-scope = "user"
-
-[[entry]]
-source = "config/quickshell/qml_color.json"
-target = "~/.config/quickshell/qml_color.json"
-scope = "user"
-
-[[entry]]
-source = "config/waybar/config.jsonc"
-target = "~/.config/waybar/config.jsonc"
-scope = "user"
-
-[[entry]]
-source = "config/waybar/indicators/idle.sh"
-target = "~/.config/waybar/indicators/idle.sh"
-scope = "user"
-
-[[entry]]
-source = "config/waybar/indicators/notification-silencing.sh"
-target = "~/.config/waybar/indicators/notification-silencing.sh"
-scope = "user"
-
-[[entry]]
-source = "config/waybar/style.css"
-target = "~/.config/waybar/style.css"
-scope = "user"
-
-[[entry]]
-source = "config/waypaper/config.ini"
-target = "~/.config/waypaper/config.ini"
-scope = "user"
-
-[[entry]]
-source = "config/xdg-desktop-portal/hyprland-portals.conf"
-target = "~/.config/xdg-desktop-portal/hyprland-portals.conf"
-scope = "user"
-
-[[entry]]
-source = "config/xdg-terminals.list"
-target = "~/.config/xdg-terminals.list"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-after-resume"
-target = "~/.local/bin/hypr-after-resume"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-app-menu"
-target = "~/.local/bin/hypr-app-menu"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-clipboard"
-target = "~/.local/bin/hypr-clipboard"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-hdr-toggle"
-target = "~/.local/bin/hypr-hdr-toggle"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-keybindings"
-target = "~/.local/bin/hypr-keybindings"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-screenshot"
-target = "~/.local/bin/hypr-screenshot"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-select-wallpaper"
-target = "~/.local/bin/hypr-select-wallpaper"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-system-menu"
-target = "~/.local/bin/hypr-system-menu"
-scope = "user"
-
-[[entry]]
-source = "bin/hypr-theme"
-target = "~/.local/bin/hypr-theme"
-scope = "user"
-
-[[entry]]
-source = "bin/sddm-select-wallpaper"
-target = "~/.local/bin/sddm-select-wallpaper"
-scope = "user"
-
-[[entry]]
-source = "bin/waybar-audio-output"
-target = "~/.local/bin/waybar-audio-output"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/fonts/Caveat.ttf"
-target = "~/.local/share/fonts/Caveat.ttf"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/fonts/omarchy.ttf"
-target = "~/.local/share/fonts/omarchy.ttf"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/backgrounds/1-totoro.webp"
-target = "~/.local/share/hypr-themes/catppuccin/backgrounds/1-totoro.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/backgrounds/2-waves.webp"
-target = "~/.local/share/hypr-themes/catppuccin/backgrounds/2-waves.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/backgrounds/3-blue-eye.webp"
-target = "~/.local/share/hypr-themes/catppuccin/backgrounds/3-blue-eye.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/catppuccin/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/colors.toml"
-target = "~/.local/share/hypr-themes/catppuccin/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/icons.theme"
-target = "~/.local/share/hypr-themes/catppuccin/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/preview.png"
-target = "~/.local/share/hypr-themes/catppuccin/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin/vscode.json"
-target = "~/.local/share/hypr-themes/catppuccin/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/backgrounds/1-color-fade.webp"
-target = "~/.local/share/hypr-themes/catppuccin-latte/backgrounds/1-color-fade.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/catppuccin-latte/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/colors.toml"
-target = "~/.local/share/hypr-themes/catppuccin-latte/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/icons.theme"
-target = "~/.local/share/hypr-themes/catppuccin-latte/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/preview.png"
-target = "~/.local/share/hypr-themes/catppuccin-latte/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/catppuccin-latte/vscode.json"
-target = "~/.local/share/hypr-themes/catppuccin-latte/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/backgrounds/1-cosmic.webp"
-target = "~/.local/share/hypr-themes/ethereal/backgrounds/1-cosmic.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/backgrounds/2-meadow.webp"
-target = "~/.local/share/hypr-themes/ethereal/backgrounds/2-meadow.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/ethereal/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/colors.toml"
-target = "~/.local/share/hypr-themes/ethereal/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/icons.theme"
-target = "~/.local/share/hypr-themes/ethereal/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ethereal/preview.png"
-target = "~/.local/share/hypr-themes/ethereal/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/backgrounds/1-tree-tops.webp"
-target = "~/.local/share/hypr-themes/everforest/backgrounds/1-tree-tops.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/everforest/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/colors.toml"
-target = "~/.local/share/hypr-themes/everforest/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/icons.theme"
-target = "~/.local/share/hypr-themes/everforest/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/preview.png"
-target = "~/.local/share/hypr-themes/everforest/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/everforest/vscode.json"
-target = "~/.local/share/hypr-themes/everforest/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/backgrounds/1-orb.webp"
-target = "~/.local/share/hypr-themes/flexoki-light/backgrounds/1-orb.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/backgrounds/2-omarchy.webp"
-target = "~/.local/share/hypr-themes/flexoki-light/backgrounds/2-omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/colors.toml"
-target = "~/.local/share/hypr-themes/flexoki-light/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/icons.theme"
-target = "~/.local/share/hypr-themes/flexoki-light/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/preview.png"
-target = "~/.local/share/hypr-themes/flexoki-light/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/flexoki-light/vscode.json"
-target = "~/.local/share/hypr-themes/flexoki-light/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/1-the-backwater.jpg"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/1-the-backwater.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/2-flower-basket.webp"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/2-flower-basket.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/3-village-square.jpg"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/3-village-square.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/4-idyllic-procession.jpg"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/4-idyllic-procession.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/5-leaves.jpg"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/5-leaves.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/gruvbox/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/colors.toml"
-target = "~/.local/share/hypr-themes/gruvbox/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/icons.theme"
-target = "~/.local/share/hypr-themes/gruvbox/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/preview.png"
-target = "~/.local/share/hypr-themes/gruvbox/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/gruvbox/vscode.json"
-target = "~/.local/share/hypr-themes/gruvbox/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/backgrounds/1-synth-scape.jpg"
-target = "~/.local/share/hypr-themes/hackerman/backgrounds/1-synth-scape.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/backgrounds/2-geometric.webp"
-target = "~/.local/share/hypr-themes/hackerman/backgrounds/2-geometric.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/hackerman/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/colors.toml"
-target = "~/.local/share/hypr-themes/hackerman/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/icons.theme"
-target = "~/.local/share/hypr-themes/hackerman/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/preview.png"
-target = "~/.local/share/hypr-themes/hackerman/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/hackerman/vscode.json"
-target = "~/.local/share/hypr-themes/hackerman/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/backgrounds/1-kanagawa.jpg"
-target = "~/.local/share/hypr-themes/kanagawa/backgrounds/1-kanagawa.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/kanagawa/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/colors.toml"
-target = "~/.local/share/hypr-themes/kanagawa/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/icons.theme"
-target = "~/.local/share/hypr-themes/kanagawa/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/preview.png"
-target = "~/.local/share/hypr-themes/kanagawa/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/kanagawa/vscode.json"
-target = "~/.local/share/hypr-themes/kanagawa/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/backgrounds/1-eyes-wide.webp"
-target = "~/.local/share/hypr-themes/last-horizon/backgrounds/1-eyes-wide.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/backgrounds/2-blink.webp"
-target = "~/.local/share/hypr-themes/last-horizon/backgrounds/2-blink.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/backgrounds/3-bokeh.webp"
-target = "~/.local/share/hypr-themes/last-horizon/backgrounds/3-bokeh.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/backgrounds/4-new-horizons.jpg"
-target = "~/.local/share/hypr-themes/last-horizon/backgrounds/4-new-horizons.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/colors.toml"
-target = "~/.local/share/hypr-themes/last-horizon/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/icons.theme"
-target = "~/.local/share/hypr-themes/last-horizon/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/preview.png"
-target = "~/.local/share/hypr-themes/last-horizon/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/last-horizon/vscode.json"
-target = "~/.local/share/hypr-themes/last-horizon/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/backgrounds/01-united-in-severance.webp"
-target = "~/.local/share/hypr-themes/lumon/backgrounds/01-united-in-severance.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/backgrounds/02-opinions-equally.webp"
-target = "~/.local/share/hypr-themes/lumon/backgrounds/02-opinions-equally.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/lumon/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/colors.toml"
-target = "~/.local/share/hypr-themes/lumon/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/icons.theme"
-target = "~/.local/share/hypr-themes/lumon/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/preview.png"
-target = "~/.local/share/hypr-themes/lumon/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lumon/vscode.json"
-target = "~/.local/share/hypr-themes/lumon/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/01-cherry-blossom-bokeh.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/01-cherry-blossom-bokeh.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/02-cherry-blossom-white.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/02-cherry-blossom-white.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/03-pastel-clouds.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/03-pastel-clouds.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/04-elegant-blue-wave.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/04-elegant-blue-wave.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/05-abstract-wave.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/05-abstract-wave.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/backgrounds/06-omarchy.webp"
-target = "~/.local/share/hypr-themes/lupine/backgrounds/06-omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/colors.toml"
-target = "~/.local/share/hypr-themes/lupine/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/icons.theme"
-target = "~/.local/share/hypr-themes/lupine/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/lupine/preview.png"
-target = "~/.local/share/hypr-themes/lupine/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/backgrounds/0-ship-at-sea.jpg"
-target = "~/.local/share/hypr-themes/matte-black/backgrounds/0-ship-at-sea.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/backgrounds/1-dark-waters.webp"
-target = "~/.local/share/hypr-themes/matte-black/backgrounds/1-dark-waters.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/backgrounds/2-dot-hands.webp"
-target = "~/.local/share/hypr-themes/matte-black/backgrounds/2-dot-hands.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/matte-black/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/colors.toml"
-target = "~/.local/share/hypr-themes/matte-black/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/icons.theme"
-target = "~/.local/share/hypr-themes/matte-black/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/preview.png"
-target = "~/.local/share/hypr-themes/matte-black/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/matte-black/vscode.json"
-target = "~/.local/share/hypr-themes/matte-black/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/backgrounds/01-nature-of-fear.webp"
-target = "~/.local/share/hypr-themes/miasma/backgrounds/01-nature-of-fear.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/backgrounds/02-crowned.webp"
-target = "~/.local/share/hypr-themes/miasma/backgrounds/02-crowned.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/miasma/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/colors.toml"
-target = "~/.local/share/hypr-themes/miasma/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/icons.theme"
-target = "~/.local/share/hypr-themes/miasma/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/miasma/preview.png"
-target = "~/.local/share/hypr-themes/miasma/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/backgrounds/0-black-moon.jpg"
-target = "~/.local/share/hypr-themes/nord/backgrounds/0-black-moon.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/backgrounds/1-city-view.webp"
-target = "~/.local/share/hypr-themes/nord/backgrounds/1-city-view.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/backgrounds/2-night-hawks.webp"
-target = "~/.local/share/hypr-themes/nord/backgrounds/2-night-hawks.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/nord/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/colors.toml"
-target = "~/.local/share/hypr-themes/nord/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/icons.theme"
-target = "~/.local/share/hypr-themes/nord/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/preview.png"
-target = "~/.local/share/hypr-themes/nord/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/nord/vscode.json"
-target = "~/.local/share/hypr-themes/nord/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/backgrounds/1-glowing-city.webp"
-target = "~/.local/share/hypr-themes/osaka-jade/backgrounds/1-glowing-city.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/backgrounds/2-shaded-entrance.webp"
-target = "~/.local/share/hypr-themes/osaka-jade/backgrounds/2-shaded-entrance.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/backgrounds/3-mountain-moon.webp"
-target = "~/.local/share/hypr-themes/osaka-jade/backgrounds/3-mountain-moon.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/osaka-jade/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/colors.toml"
-target = "~/.local/share/hypr-themes/osaka-jade/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/icons.theme"
-target = "~/.local/share/hypr-themes/osaka-jade/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/preview.png"
-target = "~/.local/share/hypr-themes/osaka-jade/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/osaka-jade/vscode.json"
-target = "~/.local/share/hypr-themes/osaka-jade/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/1-in-the-groove.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/1-in-the-groove.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/2-dusk-guardian.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/2-dusk-guardian.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/3-glassy-lines.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/3-glassy-lines.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/4-gateway.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/4-gateway.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/5-zen-boat.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/5-zen-boat.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/6-abstract-pyramids.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/6-abstract-pyramids.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/7-the-journey.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/7-the-journey.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/8-glitter-glass.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/8-glitter-glass.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/retro-82/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/colors.toml"
-target = "~/.local/share/hypr-themes/retro-82/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/icons.theme"
-target = "~/.local/share/hypr-themes/retro-82/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/preview.png"
-target = "~/.local/share/hypr-themes/retro-82/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/retro-82/vscode.json"
-target = "~/.local/share/hypr-themes/retro-82/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/backgrounds/0-launch.webp"
-target = "~/.local/share/hypr-themes/ristretto/backgrounds/0-launch.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/backgrounds/1-color-curves.webp"
-target = "~/.local/share/hypr-themes/ristretto/backgrounds/1-color-curves.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/backgrounds/2-coffee-beans.jpg"
-target = "~/.local/share/hypr-themes/ristretto/backgrounds/2-coffee-beans.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/backgrounds/3-industrial-moon.webp"
-target = "~/.local/share/hypr-themes/ristretto/backgrounds/3-industrial-moon.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/ristretto/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/colors.toml"
-target = "~/.local/share/hypr-themes/ristretto/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/icons.theme"
-target = "~/.local/share/hypr-themes/ristretto/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/ristretto/preview.png"
-target = "~/.local/share/hypr-themes/ristretto/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/backgrounds/1-funky-shapes.webp"
-target = "~/.local/share/hypr-themes/rose-pine/backgrounds/1-funky-shapes.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/backgrounds/2-dot-map.webp"
-target = "~/.local/share/hypr-themes/rose-pine/backgrounds/2-dot-map.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/backgrounds/3-omarchy-plants.webp"
-target = "~/.local/share/hypr-themes/rose-pine/backgrounds/3-omarchy-plants.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/rose-pine/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/colors.toml"
-target = "~/.local/share/hypr-themes/rose-pine/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/icons.theme"
-target = "~/.local/share/hypr-themes/rose-pine/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/preview.png"
-target = "~/.local/share/hypr-themes/rose-pine/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/rose-pine/vscode.json"
-target = "~/.local/share/hypr-themes/rose-pine/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/backgrounds/1-on-pole.webp"
-target = "~/.local/share/hypr-themes/solitude/backgrounds/1-on-pole.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/backgrounds/2-wreakage.webp"
-target = "~/.local/share/hypr-themes/solitude/backgrounds/2-wreakage.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/backgrounds/3-climb.jpg"
-target = "~/.local/share/hypr-themes/solitude/backgrounds/3-climb.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/backgrounds/4-ether.webp"
-target = "~/.local/share/hypr-themes/solitude/backgrounds/4-ether.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/backgrounds/5-eyed.jpg"
-target = "~/.local/share/hypr-themes/solitude/backgrounds/5-eyed.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/colors.toml"
-target = "~/.local/share/hypr-themes/solitude/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/icons.theme"
-target = "~/.local/share/hypr-themes/solitude/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/preview.png"
-target = "~/.local/share/hypr-themes/solitude/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/solitude/vscode.json"
-target = "~/.local/share/hypr-themes/solitude/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/0-winding-road.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/0-winding-road.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/1-quattro.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/1-quattro.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/2-swirl-buck.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/2-swirl-buck.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/3-sunset-lake.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/3-sunset-lake.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/4-omakub.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/4-omakub.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/5-oma-cityscape.jpg"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/5-oma-cityscape.jpg"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/6-oma.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/6-oma.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/tokyo-night/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/colors.toml"
-target = "~/.local/share/hypr-themes/tokyo-night/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/icons.theme"
-target = "~/.local/share/hypr-themes/tokyo-night/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/preview.png"
-target = "~/.local/share/hypr-themes/tokyo-night/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/tokyo-night/vscode.json"
-target = "~/.local/share/hypr-themes/tokyo-night/vscode.json"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/backgrounds/0-dot-hands.webp"
-target = "~/.local/share/hypr-themes/vantablack/backgrounds/0-dot-hands.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/backgrounds/1-twisted-stairs.webp"
-target = "~/.local/share/hypr-themes/vantablack/backgrounds/1-twisted-stairs.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/backgrounds/2-layers-deep.webp"
-target = "~/.local/share/hypr-themes/vantablack/backgrounds/2-layers-deep.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/backgrounds/3-layers-stacked.webp"
-target = "~/.local/share/hypr-themes/vantablack/backgrounds/3-layers-stacked.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/vantablack/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/colors.toml"
-target = "~/.local/share/hypr-themes/vantablack/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/icons.theme"
-target = "~/.local/share/hypr-themes/vantablack/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/vantablack/preview.png"
-target = "~/.local/share/hypr-themes/vantablack/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/backgrounds/1-white.webp"
-target = "~/.local/share/hypr-themes/white/backgrounds/1-white.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/backgrounds/2-white.webp"
-target = "~/.local/share/hypr-themes/white/backgrounds/2-white.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/backgrounds/3-white.webp"
-target = "~/.local/share/hypr-themes/white/backgrounds/3-white.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/backgrounds/omarchy.webp"
-target = "~/.local/share/hypr-themes/white/backgrounds/omarchy.webp"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/colors.toml"
-target = "~/.local/share/hypr-themes/white/colors.toml"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/icons.theme"
-target = "~/.local/share/hypr-themes/white/icons.theme"
-scope = "user"
-
-[[entry]]
-source = "home/.local/share/hypr-themes/white/preview.png"
-target = "~/.local/share/hypr-themes/white/preview.png"
-scope = "user"
-
-[[entry]]
-source = "home/.p10k.zsh"
-target = "~/.p10k.zsh"
-scope = "user"
-
-[[entry]]
-source = "home/.profile"
-target = "~/.profile"
-scope = "user"
-
-[[entry]]
-source = "home/.zprofile"
-target = "~/.zprofile"
-scope = "user"
-
-[[entry]]
-source = "home/.zshenv"
-target = "~/.zshenv"
-scope = "user"
-
-[[entry]]
-source = "home/.zshrc"
-target = "~/.zshrc"
-scope = "user"
-
-[[entry]]
-source = "system/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default"
-target = "/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default"
-scope = "system"
-
-[[entry]]
-source = "system/usr/share/sddm/themes/simple_sddm_2/theme.conf"
-target = "/usr/share/sddm/themes/simple_sddm_2/theme.conf"
-scope = "system"
+targets = [
+    "/etc/locale.conf",
+    "/etc/sddm.conf",
+    "/etc/vconsole.conf",
+    "~/.bashrc",
+    "~/.config/Kvantum/kvantum.kvconfig",
+    "~/.config/btop/btop.conf",
+    "~/.config/btop/themes/hypr-theme.theme",
+    "~/.config/btop/themes/omarchy-tokyo-night.theme",
+    "~/.config/fuzzel/fuzzel.ini",
+    "~/.config/gtk-3.0/assets/close-active.svg",
+    "~/.config/gtk-3.0/assets/close-backdrop-active.svg",
+    "~/.config/gtk-3.0/assets/close-backdrop-hover.svg",
+    "~/.config/gtk-3.0/assets/close-backdrop-normal.svg",
+    "~/.config/gtk-3.0/assets/close-hover.svg",
+    "~/.config/gtk-3.0/assets/close-normal.svg",
+    "~/.config/gtk-3.0/assets/maximize-active.svg",
+    "~/.config/gtk-3.0/assets/maximize-backdrop-active.svg",
+    "~/.config/gtk-3.0/assets/maximize-backdrop-hover.svg",
+    "~/.config/gtk-3.0/assets/maximize-backdrop-normal.svg",
+    "~/.config/gtk-3.0/assets/maximize-hover.svg",
+    "~/.config/gtk-3.0/assets/maximize-normal.svg",
+    "~/.config/gtk-3.0/assets/maximized-active.svg",
+    "~/.config/gtk-3.0/assets/maximized-backdrop-active.svg",
+    "~/.config/gtk-3.0/assets/maximized-backdrop-hover.svg",
+    "~/.config/gtk-3.0/assets/maximized-backdrop-normal.svg",
+    "~/.config/gtk-3.0/assets/maximized-hover.svg",
+    "~/.config/gtk-3.0/assets/maximized-normal.svg",
+    "~/.config/gtk-3.0/assets/minimize-active.svg",
+    "~/.config/gtk-3.0/assets/minimize-backdrop-active.svg",
+    "~/.config/gtk-3.0/assets/minimize-backdrop-hover.svg",
+    "~/.config/gtk-3.0/assets/minimize-backdrop-normal.svg",
+    "~/.config/gtk-3.0/assets/minimize-hover.svg",
+    "~/.config/gtk-3.0/assets/minimize-normal.svg",
+    "~/.config/gtk-3.0/bookmarks",
+    "~/.config/gtk-3.0/colors.css",
+    "~/.config/gtk-3.0/gtk.css",
+    "~/.config/gtk-3.0/settings.ini",
+    "~/.config/gtk-3.0/window_decorations.css",
+    "~/.config/gtk-4.0/colors.css",
+    "~/.config/gtk-4.0/gtk.css",
+    "~/.config/gtk-4.0/settings.ini",
+    "~/.config/gtk-4.0/window_decorations.css",
+    "~/.config/hypr/hypridle.conf",
+    "~/.config/hypr/hyprland.lua",
+    "~/.config/hypr/hyprlock.conf",
+    "~/.config/hypr/hyprpaper.conf",
+    "~/.config/hypr-theme/templates/btop.theme.tpl",
+    "~/.config/hypr-theme/templates/fuzzel.ini.tpl",
+    "~/.config/hypr-theme/templates/hyprland.lua.tpl",
+    "~/.config/hypr-theme/templates/hyprlock.conf.tpl",
+    "~/.config/hypr-theme/templates/kitty.conf.tpl",
+    "~/.config/hypr-theme/templates/mako.ini.tpl",
+    "~/.config/hypr-theme/templates/quickshell.json.tpl",
+    "~/.config/hypr-theme/templates/vscode-theme.json.tpl",
+    "~/.config/hypr-theme/templates/waybar.css.tpl",
+    "~/.config/kitty/kitty.conf",
+    "~/.config/mako/config",
+    "~/.config/mimeapps.list",
+    "~/.config/qt6ct/qt6ct.conf",
+    "~/.config/quickshell/palamar/.qmlls.ini",
+    "~/.config/quickshell/palamar/ActionTile.qml",
+    "~/.config/quickshell/palamar/AudioPanel.qml",
+    "~/.config/quickshell/palamar/BluetoothPanel.qml",
+    "~/.config/quickshell/palamar/CalendarPanel.qml",
+    "~/.config/quickshell/palamar/DisplayPanel.qml",
+    "~/.config/quickshell/palamar/ImagePicker.qml",
+    "~/.config/quickshell/palamar/NetworkPanel.qml",
+    "~/.config/quickshell/palamar/PanelButton.qml",
+    "~/.config/quickshell/palamar/PanelHero.qml",
+    "~/.config/quickshell/palamar/PanelRow.qml",
+    "~/.config/quickshell/palamar/PanelSlider.qml",
+    "~/.config/quickshell/palamar/RoundButton.qml",
+    "~/.config/quickshell/palamar/SectionHeader.qml",
+    "~/.config/quickshell/palamar/Theme.qml",
+    "~/.config/quickshell/palamar/ToggleSwitch.qml",
+    "~/.config/quickshell/palamar/shell.qml",
+    "~/.config/quickshell/qml_color.json",
+    "~/.config/waybar/config.jsonc",
+    "~/.config/waybar/indicators/idle.sh",
+    "~/.config/waybar/indicators/notification-silencing.sh",
+    "~/.config/waybar/style.css",
+    "~/.config/waypaper/config.ini",
+    "~/.config/xdg-desktop-portal/hyprland-portals.conf",
+    "~/.config/xdg-terminals.list",
+    "~/.local/bin/hypr-after-resume",
+    "~/.local/bin/hypr-app-menu",
+    "~/.local/bin/hypr-clipboard",
+    "~/.local/bin/hypr-hdr-toggle",
+    "~/.local/bin/hypr-keybindings",
+    "~/.local/bin/hypr-screenshot",
+    "~/.local/bin/hypr-select-wallpaper",
+    "~/.local/bin/hypr-system-menu",
+    "~/.local/bin/hypr-theme",
+    "~/.local/bin/sddm-select-wallpaper",
+    "~/.local/bin/waybar-audio-output",
+    "~/.local/share/fonts/Caveat.ttf",
+    "~/.local/share/fonts/omarchy.ttf",
+    "~/.local/share/hypr-themes/catppuccin/backgrounds/1-totoro.webp",
+    "~/.local/share/hypr-themes/catppuccin/backgrounds/2-waves.webp",
+    "~/.local/share/hypr-themes/catppuccin/backgrounds/3-blue-eye.webp",
+    "~/.local/share/hypr-themes/catppuccin/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/catppuccin/colors.toml",
+    "~/.local/share/hypr-themes/catppuccin/icons.theme",
+    "~/.local/share/hypr-themes/catppuccin/preview.png",
+    "~/.local/share/hypr-themes/catppuccin/vscode.json",
+    "~/.local/share/hypr-themes/catppuccin-latte/backgrounds/1-color-fade.webp",
+    "~/.local/share/hypr-themes/catppuccin-latte/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/catppuccin-latte/colors.toml",
+    "~/.local/share/hypr-themes/catppuccin-latte/icons.theme",
+    "~/.local/share/hypr-themes/catppuccin-latte/preview.png",
+    "~/.local/share/hypr-themes/catppuccin-latte/vscode.json",
+    "~/.local/share/hypr-themes/ethereal/backgrounds/1-cosmic.webp",
+    "~/.local/share/hypr-themes/ethereal/backgrounds/2-meadow.webp",
+    "~/.local/share/hypr-themes/ethereal/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/ethereal/colors.toml",
+    "~/.local/share/hypr-themes/ethereal/icons.theme",
+    "~/.local/share/hypr-themes/ethereal/preview.png",
+    "~/.local/share/hypr-themes/everforest/backgrounds/1-tree-tops.webp",
+    "~/.local/share/hypr-themes/everforest/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/everforest/colors.toml",
+    "~/.local/share/hypr-themes/everforest/icons.theme",
+    "~/.local/share/hypr-themes/everforest/preview.png",
+    "~/.local/share/hypr-themes/everforest/vscode.json",
+    "~/.local/share/hypr-themes/flexoki-light/backgrounds/1-orb.webp",
+    "~/.local/share/hypr-themes/flexoki-light/backgrounds/2-omarchy.webp",
+    "~/.local/share/hypr-themes/flexoki-light/colors.toml",
+    "~/.local/share/hypr-themes/flexoki-light/icons.theme",
+    "~/.local/share/hypr-themes/flexoki-light/preview.png",
+    "~/.local/share/hypr-themes/flexoki-light/vscode.json",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/1-the-backwater.jpg",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/2-flower-basket.webp",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/3-village-square.jpg",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/4-idyllic-procession.jpg",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/5-leaves.jpg",
+    "~/.local/share/hypr-themes/gruvbox/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/gruvbox/colors.toml",
+    "~/.local/share/hypr-themes/gruvbox/icons.theme",
+    "~/.local/share/hypr-themes/gruvbox/preview.png",
+    "~/.local/share/hypr-themes/gruvbox/vscode.json",
+    "~/.local/share/hypr-themes/hackerman/backgrounds/1-synth-scape.jpg",
+    "~/.local/share/hypr-themes/hackerman/backgrounds/2-geometric.webp",
+    "~/.local/share/hypr-themes/hackerman/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/hackerman/colors.toml",
+    "~/.local/share/hypr-themes/hackerman/icons.theme",
+    "~/.local/share/hypr-themes/hackerman/preview.png",
+    "~/.local/share/hypr-themes/hackerman/vscode.json",
+    "~/.local/share/hypr-themes/kanagawa/backgrounds/1-kanagawa.jpg",
+    "~/.local/share/hypr-themes/kanagawa/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/kanagawa/colors.toml",
+    "~/.local/share/hypr-themes/kanagawa/icons.theme",
+    "~/.local/share/hypr-themes/kanagawa/preview.png",
+    "~/.local/share/hypr-themes/kanagawa/vscode.json",
+    "~/.local/share/hypr-themes/last-horizon/backgrounds/1-eyes-wide.webp",
+    "~/.local/share/hypr-themes/last-horizon/backgrounds/2-blink.webp",
+    "~/.local/share/hypr-themes/last-horizon/backgrounds/3-bokeh.webp",
+    "~/.local/share/hypr-themes/last-horizon/backgrounds/4-new-horizons.jpg",
+    "~/.local/share/hypr-themes/last-horizon/colors.toml",
+    "~/.local/share/hypr-themes/last-horizon/icons.theme",
+    "~/.local/share/hypr-themes/last-horizon/preview.png",
+    "~/.local/share/hypr-themes/last-horizon/vscode.json",
+    "~/.local/share/hypr-themes/lumon/backgrounds/01-united-in-severance.webp",
+    "~/.local/share/hypr-themes/lumon/backgrounds/02-opinions-equally.webp",
+    "~/.local/share/hypr-themes/lumon/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/lumon/colors.toml",
+    "~/.local/share/hypr-themes/lumon/icons.theme",
+    "~/.local/share/hypr-themes/lumon/preview.png",
+    "~/.local/share/hypr-themes/lumon/vscode.json",
+    "~/.local/share/hypr-themes/lupine/backgrounds/01-cherry-blossom-bokeh.webp",
+    "~/.local/share/hypr-themes/lupine/backgrounds/02-cherry-blossom-white.webp",
+    "~/.local/share/hypr-themes/lupine/backgrounds/03-pastel-clouds.webp",
+    "~/.local/share/hypr-themes/lupine/backgrounds/04-elegant-blue-wave.webp",
+    "~/.local/share/hypr-themes/lupine/backgrounds/05-abstract-wave.webp",
+    "~/.local/share/hypr-themes/lupine/backgrounds/06-omarchy.webp",
+    "~/.local/share/hypr-themes/lupine/colors.toml",
+    "~/.local/share/hypr-themes/lupine/icons.theme",
+    "~/.local/share/hypr-themes/lupine/preview.png",
+    "~/.local/share/hypr-themes/matte-black/backgrounds/0-ship-at-sea.jpg",
+    "~/.local/share/hypr-themes/matte-black/backgrounds/1-dark-waters.webp",
+    "~/.local/share/hypr-themes/matte-black/backgrounds/2-dot-hands.webp",
+    "~/.local/share/hypr-themes/matte-black/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/matte-black/colors.toml",
+    "~/.local/share/hypr-themes/matte-black/icons.theme",
+    "~/.local/share/hypr-themes/matte-black/preview.png",
+    "~/.local/share/hypr-themes/matte-black/vscode.json",
+    "~/.local/share/hypr-themes/miasma/backgrounds/01-nature-of-fear.webp",
+    "~/.local/share/hypr-themes/miasma/backgrounds/02-crowned.webp",
+    "~/.local/share/hypr-themes/miasma/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/miasma/colors.toml",
+    "~/.local/share/hypr-themes/miasma/icons.theme",
+    "~/.local/share/hypr-themes/miasma/preview.png",
+    "~/.local/share/hypr-themes/nord/backgrounds/0-black-moon.jpg",
+    "~/.local/share/hypr-themes/nord/backgrounds/1-city-view.webp",
+    "~/.local/share/hypr-themes/nord/backgrounds/2-night-hawks.webp",
+    "~/.local/share/hypr-themes/nord/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/nord/colors.toml",
+    "~/.local/share/hypr-themes/nord/icons.theme",
+    "~/.local/share/hypr-themes/nord/preview.png",
+    "~/.local/share/hypr-themes/nord/vscode.json",
+    "~/.local/share/hypr-themes/osaka-jade/backgrounds/1-glowing-city.webp",
+    "~/.local/share/hypr-themes/osaka-jade/backgrounds/2-shaded-entrance.webp",
+    "~/.local/share/hypr-themes/osaka-jade/backgrounds/3-mountain-moon.webp",
+    "~/.local/share/hypr-themes/osaka-jade/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/osaka-jade/colors.toml",
+    "~/.local/share/hypr-themes/osaka-jade/icons.theme",
+    "~/.local/share/hypr-themes/osaka-jade/preview.png",
+    "~/.local/share/hypr-themes/osaka-jade/vscode.json",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/1-in-the-groove.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/2-dusk-guardian.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/3-glassy-lines.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/4-gateway.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/5-zen-boat.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/6-abstract-pyramids.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/7-the-journey.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/8-glitter-glass.webp",
+    "~/.local/share/hypr-themes/retro-82/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/retro-82/colors.toml",
+    "~/.local/share/hypr-themes/retro-82/icons.theme",
+    "~/.local/share/hypr-themes/retro-82/preview.png",
+    "~/.local/share/hypr-themes/retro-82/vscode.json",
+    "~/.local/share/hypr-themes/ristretto/backgrounds/0-launch.webp",
+    "~/.local/share/hypr-themes/ristretto/backgrounds/1-color-curves.webp",
+    "~/.local/share/hypr-themes/ristretto/backgrounds/2-coffee-beans.jpg",
+    "~/.local/share/hypr-themes/ristretto/backgrounds/3-industrial-moon.webp",
+    "~/.local/share/hypr-themes/ristretto/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/ristretto/colors.toml",
+    "~/.local/share/hypr-themes/ristretto/icons.theme",
+    "~/.local/share/hypr-themes/ristretto/preview.png",
+    "~/.local/share/hypr-themes/rose-pine/backgrounds/1-funky-shapes.webp",
+    "~/.local/share/hypr-themes/rose-pine/backgrounds/2-dot-map.webp",
+    "~/.local/share/hypr-themes/rose-pine/backgrounds/3-omarchy-plants.webp",
+    "~/.local/share/hypr-themes/rose-pine/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/rose-pine/colors.toml",
+    "~/.local/share/hypr-themes/rose-pine/icons.theme",
+    "~/.local/share/hypr-themes/rose-pine/preview.png",
+    "~/.local/share/hypr-themes/rose-pine/vscode.json",
+    "~/.local/share/hypr-themes/solitude/backgrounds/1-on-pole.webp",
+    "~/.local/share/hypr-themes/solitude/backgrounds/2-wreakage.webp",
+    "~/.local/share/hypr-themes/solitude/backgrounds/3-climb.jpg",
+    "~/.local/share/hypr-themes/solitude/backgrounds/4-ether.webp",
+    "~/.local/share/hypr-themes/solitude/backgrounds/5-eyed.jpg",
+    "~/.local/share/hypr-themes/solitude/colors.toml",
+    "~/.local/share/hypr-themes/solitude/icons.theme",
+    "~/.local/share/hypr-themes/solitude/preview.png",
+    "~/.local/share/hypr-themes/solitude/vscode.json",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/0-winding-road.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/1-quattro.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/2-swirl-buck.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/3-sunset-lake.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/4-omakub.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/5-oma-cityscape.jpg",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/6-oma.webp",
+    "~/.local/share/hypr-themes/tokyo-night/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/tokyo-night/colors.toml",
+    "~/.local/share/hypr-themes/tokyo-night/icons.theme",
+    "~/.local/share/hypr-themes/tokyo-night/preview.png",
+    "~/.local/share/hypr-themes/tokyo-night/vscode.json",
+    "~/.local/share/hypr-themes/vantablack/backgrounds/0-dot-hands.webp",
+    "~/.local/share/hypr-themes/vantablack/backgrounds/1-twisted-stairs.webp",
+    "~/.local/share/hypr-themes/vantablack/backgrounds/2-layers-deep.webp",
+    "~/.local/share/hypr-themes/vantablack/backgrounds/3-layers-stacked.webp",
+    "~/.local/share/hypr-themes/vantablack/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/vantablack/colors.toml",
+    "~/.local/share/hypr-themes/vantablack/icons.theme",
+    "~/.local/share/hypr-themes/vantablack/preview.png",
+    "~/.local/share/hypr-themes/white/backgrounds/1-white.webp",
+    "~/.local/share/hypr-themes/white/backgrounds/2-white.webp",
+    "~/.local/share/hypr-themes/white/backgrounds/3-white.webp",
+    "~/.local/share/hypr-themes/white/backgrounds/omarchy.webp",
+    "~/.local/share/hypr-themes/white/colors.toml",
+    "~/.local/share/hypr-themes/white/icons.theme",
+    "~/.local/share/hypr-themes/white/preview.png",
+    "~/.p10k.zsh",
+    "~/.profile",
+    "~/.zprofile",
+    "~/.zshenv",
+    "~/.zshrc",
+    "/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default",
+    "/usr/share/sddm/themes/simple_sddm_2/theme.conf",
+]

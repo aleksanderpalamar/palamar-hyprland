@@ -1,4 +1,5 @@
-use crate::domain::entry::{Entry, Scope};
+use crate::domain::entry::Entry;
+use crate::domain::layout::{scope_for, source_for};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use thiserror::Error;
@@ -13,42 +14,10 @@ pub enum ManifestError {
     RelativeTarget(String),
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
-#[serde(rename_all = "lowercase")]
-enum ScopeSpec {
-    User,
-    System,
-}
-
-impl From<ScopeSpec> for Scope {
-    fn from(spec: ScopeSpec) -> Self {
-        match spec {
-            ScopeSpec::User => Scope::User,
-            ScopeSpec::System => Scope::System,
-        }
-    }
-}
-
-impl From<Scope> for ScopeSpec {
-    fn from(scope: Scope) -> Self {
-        match scope {
-            Scope::User => ScopeSpec::User,
-            Scope::System => ScopeSpec::System,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct EntrySpec {
-    source: String,
-    target: String,
-    scope: ScopeSpec,
-}
-
 #[derive(Debug, Serialize, Deserialize, Default)]
 struct ManifestFile {
     #[serde(default)]
-    entry: Vec<EntrySpec>,
+    targets: Vec<String>,
 }
 
 pub fn expand(target: &str, home: &Path) -> Result<PathBuf, ManifestError> {
@@ -70,32 +39,22 @@ fn shorten(target: &Path, home: &Path) -> String {
 
 pub fn parse(contents: &str, repo: &Path, home: &Path) -> Result<Vec<Entry>, ManifestError> {
     let file: ManifestFile = toml::from_str(contents)?;
-    file.entry
+    file.targets
         .into_iter()
         .map(|spec| {
-            Ok(Entry::new(
-                repo.join(&spec.source),
-                expand(&spec.target, home)?,
-                spec.scope.into(),
-            ))
+            let target = expand(&spec, home)?;
+            let source = repo.join(source_for(&target, home));
+            let scope = scope_for(&target, home);
+            Ok(Entry::new(source, target, scope))
         })
         .collect()
 }
 
-pub fn render(entries: &[Entry], repo: &Path, home: &Path) -> Result<String, ManifestError> {
+pub fn render(entries: &[Entry], home: &Path) -> Result<String, ManifestError> {
     let file = ManifestFile {
-        entry: entries
+        targets: entries
             .iter()
-            .map(|entry| EntrySpec {
-                source: entry
-                    .source()
-                    .strip_prefix(repo)
-                    .unwrap_or(entry.source())
-                    .display()
-                    .to_string(),
-                target: shorten(entry.target(), home),
-                scope: entry.scope().into(),
-            })
+            .map(|entry| shorten(entry.target(), home))
             .collect(),
     };
     Ok(toml::to_string_pretty(&file)?)
@@ -104,6 +63,7 @@ pub fn render(entries: &[Entry], repo: &Path, home: &Path) -> Result<String, Man
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::domain::entry::Scope;
 
     fn repo() -> PathBuf {
         PathBuf::from("/home/palamar/Projetos/palamar-hyprland")
@@ -116,7 +76,7 @@ mod tests {
     #[test]
     fn expands_tilde_against_home() {
         let entries = parse(
-            "[[entry]]\nsource = \"config/hypr/hyprland.lua\"\ntarget = \"~/.config/hypr/hyprland.lua\"\nscope = \"user\"\n",
+            "targets = [\"~/.config/hypr/hyprland.lua\"]\n",
             &repo(),
             &home(),
         )
@@ -133,30 +93,58 @@ mod tests {
 
     #[test]
     fn keeps_absolute_system_targets() {
+        let entries =
+            parse("targets = [\"/etc/sddm.conf\"]\n", &repo(), &home()).expect("manifesto válido");
+
+        assert_eq!(entries[0].target(), Path::new("/etc/sddm.conf"));
+        assert_eq!(entries[0].source(), repo().join("system/etc/sddm.conf"));
+        assert!(entries[0].requires_root());
+    }
+
+    #[test]
+    fn scripts_land_in_bin() {
         let entries = parse(
-            "[[entry]]\nsource = \"system/sddm.conf\"\ntarget = \"/etc/sddm.conf\"\nscope = \"system\"\n",
+            "targets = [\"~/.local/bin/hypr-theme\"]\n",
             &repo(),
             &home(),
         )
         .expect("manifesto válido");
 
-        assert_eq!(entries[0].target(), Path::new("/etc/sddm.conf"));
-        assert!(entries[0].requires_root());
+        assert_eq!(entries[0].source(), repo().join("bin/hypr-theme"));
     }
 
     #[test]
     fn rejects_relative_target() {
-        let error = parse(
-            "[[entry]]\nsource = \"a\"\ntarget = \".config/a\"\nscope = \"user\"\n",
-            &repo(),
-            &home(),
-        );
+        let error = parse("targets = [\".config/a\"]\n", &repo(), &home());
         assert!(matches!(error, Err(ManifestError::RelativeTarget(_))));
     }
 
     #[test]
     fn empty_manifest_has_no_entries() {
         assert!(parse("", &repo(), &home()).expect("vazio").is_empty());
+    }
+
+    #[test]
+    fn renders_one_line_per_target() {
+        let entries = vec![
+            Entry::new(
+                repo().join("config/hypr/hyprland.lua"),
+                home().join(".config/hypr/hyprland.lua"),
+                Scope::User,
+            ),
+            Entry::new(
+                repo().join("system/etc/sddm.conf"),
+                PathBuf::from("/etc/sddm.conf"),
+                Scope::System,
+            ),
+        ];
+
+        let text = render(&entries, &home()).expect("render");
+
+        assert!(text.contains("\"~/.config/hypr/hyprland.lua\""));
+        assert!(text.contains("\"/etc/sddm.conf\""));
+        assert!(!text.contains("source"));
+        assert!(!text.contains("scope"));
     }
 
     #[test]
@@ -168,13 +156,13 @@ mod tests {
                 Scope::User,
             ),
             Entry::new(
-                repo().join("system/sddm.conf"),
+                repo().join("system/etc/sddm.conf"),
                 PathBuf::from("/etc/sddm.conf"),
                 Scope::System,
             ),
         ];
 
-        let text = render(&original, &repo(), &home()).expect("render");
+        let text = render(&original, &home()).expect("render");
         let parsed = parse(&text, &repo(), &home()).expect("parse");
 
         assert_eq!(parsed, original);

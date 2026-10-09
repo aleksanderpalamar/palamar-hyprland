@@ -13,7 +13,7 @@ ele por symlink.
 | `home/` | o resto do `$HOME`: os 22 temas com os 114 fundos de tela (62 MB) |
 | `system/` | arquivos fora do `$HOME` (`/etc`, `/usr/share`) |
 | `packages/` | `pacman.txt`, `aur.txt`, `flatpak.txt` e `ignore.txt` |
-| `manifest.toml` | gerado pelo `capture`: origem → destino de cada arquivo |
+| `manifest.toml` | gerado pelo `capture`: a lista de destinos rastreados |
 | `capture.toml` | o que é rastreado e o que é ignorado |
 | `wallpapers.txt` | nomes da coleção pessoal de `~/Imagens/wallpapers` (não versionada) |
 
@@ -109,6 +109,10 @@ git diff
 
 Com os symlinks ativos, editar `~/.config/hypr/hyprland.lua` já altera o repo — o
 `capture` só é necessário para arquivos que ainda não estão no manifesto.
+
+O manifesto guarda só o destino de cada arquivo. O caminho dentro do repositório
+e o escopo saem do `src/domain/layout.rs`, então não existe como os três
+discordarem entre si.
 
 Pacotes instalados aqui mas que não fazem parte do ambiente ficam em
 `packages/ignore.txt`; o `capture` não os traz de volta.

@@ -55,7 +55,7 @@ pub fn run(
         }
     }
 
-    let text = render(&entries, context.repo(), context.home())?;
+    let text = render(&entries, context.home())?;
     let path = context.manifest_path();
     fs::write(&path, text).map_err(|error| ContextError::Unreadable(path, error))?;
 
