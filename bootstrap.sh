@@ -5,7 +5,6 @@ REPO_URL="${PALAMAR_HYPRLAND_URL:-https://github.com/aleksanderpalamar/palamar-h
 REPO_DIR="${PALAMAR_HYPRLAND_DIR:-$HOME/Projetos/palamar-hyprland}"
 SDDM_THEME_URL="https://github.com/JaKooLit/simple-sddm-2.git"
 SDDM_THEME_DIR="/usr/share/sddm/themes/simple_sddm_2"
-OMARCHY_URL="https://github.com/omacom/omarchy.git"
 THEMES_DIR="$HOME/.local/share/hypr-themes"
 
 DRY_RUN=0
@@ -73,6 +72,11 @@ link_user_configs() {
     cli apply
 }
 
+refresh_fonts() {
+    step "Fontes"
+    run fc-cache -f
+}
+
 ensure_sddm_theme() {
     step "Tema do SDDM"
     if [[ -d $SDDM_THEME_DIR/.git ]]; then
@@ -102,28 +106,6 @@ enable_sddm() {
     run sudo systemctl enable sddm
 }
 
-fetch_theme_backgrounds() {
-    step "Fundos dos temas"
-    if [[ -d $THEMES_DIR/tokyo-night/backgrounds ]]; then
-        skip "já presentes"
-        return
-    fi
-    if (( DRY_RUN )); then
-        printf '    [dry-run] clona %s e copia os backgrounds\n' "$OMARCHY_URL"
-        return 0
-    fi
-    local tmp
-    tmp=$(mktemp -d)
-    git clone --depth 1 "$OMARCHY_URL" "$tmp/omarchy"
-    local theme name
-    for theme in "$tmp"/omarchy/themes/*/; do
-        name=$(basename "$theme")
-        [[ -d $THEMES_DIR/$name && -d $theme/backgrounds ]] || continue
-        cp -r "$theme/backgrounds" "$THEMES_DIR/$name/"
-    done
-    rm -rf "$tmp"
-}
-
 finish() {
     step "Pronto"
     cat <<'EOF'
@@ -143,10 +125,10 @@ main() {
     build_cli
     install_packages
     link_user_configs
+    refresh_fonts
     ensure_sddm_theme
     link_system_configs
     enable_sddm
-    fetch_theme_backgrounds
     finish
 }
 

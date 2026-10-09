@@ -68,7 +68,6 @@ O script é idempotente: rodar de novo não repete o que já está feito.
 6. `apply` — os 164 links do `$HOME`
 7. Clona o tema do SDDM e aplica a parte de sistema com `sudo`
 8. Habilita o `sddm`
-9. Copia os fundos dos 22 temas a partir do repositório do Omarchy
 
 ### O que fica de fora
 

@@ -18,6 +18,7 @@ include = [
   "~/.config/xdg-terminals.list",
   "~/.config/mimeapps.list",
   "~/.local/share/hypr-themes",
+  "~/.local/share/fonts",
   "~/.local/bin/hypr-after-resume",
   "~/.local/bin/hypr-app-menu",
   "~/.local/bin/hypr-clipboard",
@@ -35,11 +36,11 @@ include = [
 
 exclude = [
   "backups",
-  "backgrounds",
   "__pycache__",
   "current",
   "*.bak.*",
   "*.orig",
   "*.pre-omarchy",
   "*.pyc",
+  ".uuid",
 ]
