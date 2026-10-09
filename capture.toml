@@ -40,11 +40,11 @@ include = [
   "/etc/sddm.conf",
   "/etc/vconsole.conf",
   "/etc/locale.conf",
-  "/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default",
-  "/usr/share/sddm/themes/simple_sddm_2/theme.conf",
+  "/usr/share/sddm/themes/simple_sddm_2",
 ]
 
 exclude = [
+  ".git",
   "backups",
   "__pycache__",
   "current",

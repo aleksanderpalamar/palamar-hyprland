@@ -14,6 +14,13 @@ impl FileSystemReader for RealFs {
     fn symlink_target(&self, path: &Path) -> Option<PathBuf> {
         fs::read_link(path).ok()
     }
+
+    fn same_content(&self, left: &Path, right: &Path) -> bool {
+        match (fs::read(left), fs::read(right)) {
+            (Ok(left), Ok(right)) => left == right,
+            _ => false,
+        }
+    }
 }
 
 impl FileSystemWriter for RealFs {

@@ -1,4 +1,4 @@
-use crate::ports::{FileSystemExplorer, FileSystemReader, FileSystemWriter};
+use crate::ports::{FileCopier, FileSystemExplorer, FileSystemReader, FileSystemWriter};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::io;
@@ -8,9 +8,11 @@ use std::path::{Path, PathBuf};
 pub struct FakeFs {
     links: HashMap<PathBuf, PathBuf>,
     files: Vec<PathBuf>,
+    contents: HashMap<PathBuf, String>,
     dirs: HashMap<PathBuf, Vec<PathBuf>>,
     log: RefCell<Vec<String>>,
     symlink_fails: bool,
+    copy_fails: bool,
 }
 
 impl FakeFs {
@@ -30,6 +32,11 @@ impl FakeFs {
         self
     }
 
+    pub fn with_content(mut self, path: &str, text: &str) -> Self {
+        self.contents.insert(PathBuf::from(path), text.to_string());
+        self
+    }
+
     pub fn with_link(mut self, path: &str, target: &str) -> Self {
         self.links
             .insert(PathBuf::from(path), PathBuf::from(target));
@@ -38,6 +45,11 @@ impl FakeFs {
 
     pub fn failing_symlink(mut self) -> Self {
         self.symlink_fails = true;
+        self
+    }
+
+    pub fn failing_copy(mut self) -> Self {
+        self.copy_fails = true;
         self
     }
 
@@ -53,6 +65,7 @@ impl FakeFs {
 impl FakeFs {
     fn has(&self, path: &Path) -> bool {
         self.files.iter().any(|item| item == path)
+            || self.contents.contains_key(path)
             || self.links.contains_key(path)
             || self.dirs.contains_key(path)
     }
@@ -83,6 +96,13 @@ impl FileSystemReader for FakeFs {
     fn symlink_target(&self, path: &Path) -> Option<PathBuf> {
         self.links.get(path).cloned()
     }
+
+    fn same_content(&self, left: &Path, right: &Path) -> bool {
+        match (self.contents.get(left), self.contents.get(right)) {
+            (Some(left), Some(right)) => left == right,
+            _ => false,
+        }
+    }
 }
 
 impl FileSystemWriter for FakeFs {
@@ -107,6 +127,16 @@ impl FileSystemWriter for FakeFs {
             return Err(io::Error::other("sem permissão"));
         }
         self.record(format!("link {} -> {}", target.display(), source.display()));
+        Ok(())
+    }
+}
+
+impl FileCopier for FakeFs {
+    fn copy_into(&self, from: &Path, to: &Path) -> io::Result<()> {
+        if self.copy_fails {
+            return Err(io::Error::other("sem permissão"));
+        }
+        self.record(format!("copy {} <- {}", to.display(), from.display()));
         Ok(())
     }
 }

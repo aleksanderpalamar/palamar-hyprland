@@ -39,7 +39,7 @@ fn main() -> ExitCode {
                 suffix: &backup_suffix(),
                 dry_run,
             };
-            apply::run(&context, options, &fs, &fs)
+            apply::run(&context, options, &fs, &fs, &fs)
         }
         Command::Packages { action } => {
             let inventory = SystemPackages;

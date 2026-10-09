@@ -1,9 +1,10 @@
 use crate::app::context::{Context, ContextError};
 use crate::app::render::{describe, outcome_line, skipped_note};
 use crate::domain::applier::apply;
+use crate::domain::placer::Placer;
 use crate::domain::planner::{pending, plan};
 use crate::domain::selection::{Selection, filter};
-use crate::ports::{FileSystemReader, FileSystemWriter};
+use crate::ports::{FileCopier, FileSystemReader, FileSystemWriter};
 
 pub struct Options<'a> {
     pub selection: Selection,
@@ -16,6 +17,7 @@ pub fn run(
     options: Options,
     reader: &dyn FileSystemReader,
     writer: &dyn FileSystemWriter,
+    copier: &dyn FileCopier,
 ) -> Result<bool, ContextError> {
     let all = context.entries()?;
     let chosen = filter(&all, options.selection);
@@ -41,7 +43,8 @@ pub fn run(
         return Ok(true);
     }
 
-    let reports = apply(&planned, options.suffix, writer);
+    let placer = Placer { writer, copier };
+    let reports = apply(&planned, options.suffix, &placer);
     let mut ok = true;
 
     for report in &reports {

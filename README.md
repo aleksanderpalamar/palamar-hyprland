@@ -11,7 +11,7 @@ ele por symlink.
 | `config/` | arquivos de `~/.config` |
 | `bin/` | scripts de `~/.local/bin` |
 | `home/` | o resto do `$HOME`: os 22 temas com os 114 fundos de tela (62 MB) |
-| `system/` | arquivos fora do `$HOME` (`/etc`, `/usr/share`) |
+| `system/` | arquivos fora do `$HOME` (`/etc`, o tema do SDDM) |
 | `packages/` | `pacman.txt`, `aur.txt`, `flatpak.txt` e `ignore.txt` |
 | `manifest.toml` | gerado pelo `capture`: a lista de destinos rastreados |
 | `capture.toml` | o que é rastreado e o que é ignorado |
@@ -30,7 +30,14 @@ palamar-hyprland packages install    # instala os que faltam
 palamar-hyprland packages capture    # regenera as listas
 ```
 
-`apply` nunca sobrescreve: um arquivo existente vira `<nome>.bak.<epoch>` antes do link.
+`apply` nunca sobrescreve: um arquivo existente vira `<nome>.bak.<epoch>` antes de ser
+substituído.
+
+O `$HOME` recebe **symlink** para o repositório, então editar a config altera o repo.
+Já `/etc` e `/usr/share` recebem **cópia**: o greeter do SDDM roda como usuário
+`sddm` e não atravessa um `$HOME` com permissão `700`, e o systemd lê
+`locale.conf` e `vconsole.conf` antes de o `/home` estar montado. Link ali
+deixaria o teclado, o locale e a tela de login quebrados.
 
 O escopo padrão é `user`: um `apply` comum só mexe no `$HOME` e avisa quantas
 entradas de sistema deixou de fora. `--scope system` faz só essas, e `--scope all`
@@ -38,16 +45,16 @@ faz as duas.
 
 ## Máquina nova
 
-Num Arch recém-instalado, **um comando**:
-
-```
-curl -fsSL https://raw.githubusercontent.com/aleksanderpalamar/palamar-hyprland/main/bootstrap.sh | bash
-```
-
-Se o repositório já estiver clonado:
+Num Arch recém-instalado, com o repositório em mãos, **um comando**:
 
 ```
 ./bootstrap.sh
+```
+
+Depois de publicar o repositório, o mesmo resultado sem clonar antes:
+
+```
+curl -fsSL https://raw.githubusercontent.com/aleksanderpalamar/palamar-hyprland/main/bootstrap.sh | bash
 ```
 
 Para ver o que ele faria, sem alterar nada:
@@ -69,7 +76,7 @@ O script é idempotente: rodar de novo não repete o que já está feito.
 7. `apply` — os links do `$HOME` (configs, scripts, temas, fontes, dotfiles do shell)
 8. `fc-cache` para registrar as fontes
 9. `hypr-theme refresh` — gera o estado do tema e aplica o fundo de tela
-10. Clona o tema do SDDM e aplica a parte de sistema com `sudo`
+10. `apply --scope system` com `sudo` — copia `/etc` e o tema do SDDM
 11. Habilita o `sddm`
 
 Ao fim, o ambiente está igual ao desta máquina: Hyprland, waybar, quickshell,

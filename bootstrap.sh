@@ -3,8 +3,6 @@ set -euo pipefail
 
 REPO_URL="${PALAMAR_HYPRLAND_URL:-https://github.com/aleksanderpalamar/palamar-hyprland.git}"
 REPO_DIR="${PALAMAR_HYPRLAND_DIR:-$HOME/Projetos/palamar-hyprland}"
-SDDM_THEME_URL="https://github.com/JaKooLit/simple-sddm-2.git"
-SDDM_THEME_DIR="/usr/share/sddm/themes/simple_sddm_2"
 OMZ_DIR="$HOME/.oh-my-zsh"
 
 DRY_RUN=0
@@ -102,18 +100,8 @@ ensure_theme() {
     run "$HOME/.local/bin/hypr-theme" refresh
 }
 
-ensure_sddm_theme() {
-    step "Tema do SDDM"
-    if [[ -d $SDDM_THEME_DIR/.git ]]; then
-        skip "já existe"
-    else
-        run sudo git clone "$SDDM_THEME_URL" "$SDDM_THEME_DIR"
-        run sudo chown -R "$USER:$USER" "$SDDM_THEME_DIR"
-    fi
-}
-
 link_system_configs() {
-    step "Configurações de sistema"
+    step "Configurações de sistema (cópia)"
     if (( DRY_RUN )); then
         printf '    [dry-run] sudo palamar-hyprland apply --scope system\n'
         return 0
@@ -153,7 +141,6 @@ main() {
     link_user_configs
     refresh_fonts
     ensure_theme
-    ensure_sddm_theme
     link_system_configs
     enable_sddm
     finish

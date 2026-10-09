@@ -4,6 +4,7 @@ use std::path::PathBuf;
 pub enum Outcome {
     Unchanged,
     Linked,
+    Copied,
     Replaced,
     BackedUp(PathBuf),
     Failed(String),

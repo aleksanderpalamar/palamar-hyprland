@@ -33,11 +33,12 @@ pub fn outcome_line(report: &Report, home: &Path) -> String {
     match report.outcome() {
         Outcome::Unchanged => format!("{:<13} {}", "ok", target),
         Outcome::Linked => format!("{:<13} {}", "ligado", target),
+        Outcome::Copied => format!("{:<13} {}", "copiado", target),
         Outcome::Replaced => format!("{:<13} {}", "substituido", target),
         Outcome::BackedUp(saved) => {
             format!(
                 "{:<13} {} (backup: {})",
-                "ligado",
+                "aplicado",
                 target,
                 shorten(saved, home)
             )

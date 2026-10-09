@@ -4,6 +4,7 @@ use std::path::{Path, PathBuf};
 pub trait FileSystemReader {
     fn exists(&self, path: &Path) -> bool;
     fn symlink_target(&self, path: &Path) -> Option<PathBuf>;
+    fn same_content(&self, left: &Path, right: &Path) -> bool;
 }
 
 pub trait FileSystemWriter {

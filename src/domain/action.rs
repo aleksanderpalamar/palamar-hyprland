@@ -17,8 +17,8 @@ impl Action {
 pub fn decide(state: &TargetState) -> Action {
     match state {
         TargetState::Missing => Action::Create,
-        TargetState::LinkedToSource => Action::AlreadyApplied,
-        TargetState::LinkedElsewhere(_) => Action::Replace,
+        TargetState::UpToDate => Action::AlreadyApplied,
+        TargetState::Stale(_) => Action::Replace,
         TargetState::Occupied => Action::BackupAndCreate,
     }
 }
@@ -34,17 +34,14 @@ mod tests {
     }
 
     #[test]
-    fn link_to_source_needs_nothing() {
-        assert_eq!(decide(&TargetState::LinkedToSource), Action::AlreadyApplied);
+    fn up_to_date_target_needs_nothing() {
+        assert_eq!(decide(&TargetState::UpToDate), Action::AlreadyApplied);
     }
 
     #[test]
-    fn link_elsewhere_is_replaced() {
+    fn stale_target_is_replaced() {
         let other = PathBuf::from("/outro/destino");
-        assert_eq!(
-            decide(&TargetState::LinkedElsewhere(other)),
-            Action::Replace
-        );
+        assert_eq!(decide(&TargetState::Stale(other)), Action::Replace);
     }
 
     #[test]
