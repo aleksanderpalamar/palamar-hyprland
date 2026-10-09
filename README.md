@@ -38,63 +38,43 @@ faz as duas.
 
 ## Máquina nova
 
-1. **Base**
+Num Arch recém-instalado, **um comando**:
 
-   ```
-   sudo pacman -S --needed git rust
-   git clone <este-repo> ~/Projetos/palamar-hyprland
-   cd ~/Projetos/palamar-hyprland && cargo build --release
-   ```
+```
+curl -fsSL https://raw.githubusercontent.com/aleksanderpalamar/palamar-hyprland/main/bootstrap.sh | bash
+```
 
-2. **yay** (necessário para `aur.txt`)
+Se o repositório já estiver clonado:
 
-   ```
-   git clone https://aur.archlinux.org/yay.git /tmp/yay && cd /tmp/yay && makepkg -si
-   ```
+```
+./bootstrap.sh
+```
 
-3. **Pacotes**
+Para ver o que ele faria, sem alterar nada:
 
-   ```
-   ./target/release/palamar-hyprland packages install
-   ```
+```
+./bootstrap.sh --dry-run
+```
 
-4. **Configs do usuário**
+O script é idempotente: rodar de novo não repete o que já está feito.
 
-   ```
-   ./target/release/palamar-hyprland apply --dry-run
-   ./target/release/palamar-hyprland apply
-   ```
+### O que ele faz
 
-5. **Parte de sistema** (precisa de root)
+1. Instala `git`, `rust` e `base-devel`
+2. Clona este repositório em `~/Projetos/palamar-hyprland`
+3. Instala o `yay`, se faltar
+4. Compila a CLI
+5. `packages install` — 172 pacotes dos repos, 20 do AUR, 6 flatpaks
+6. `apply` — os 164 links do `$HOME`
+7. Clona o tema do SDDM e aplica a parte de sistema com `sudo`
+8. Habilita o `sddm`
+9. Copia os fundos dos 22 temas a partir do repositório do Omarchy
 
-   ```
-   sudo --preserve-env=HOME ./target/release/palamar-hyprland apply --scope system
-   ```
+### O que fica de fora
 
-6. **Tema do SDDM** — ver `system/sddm-theme.txt`
-
-   ```
-   sudo git clone https://github.com/JaKooLit/simple-sddm-2.git \
-     /usr/share/sddm/themes/simple_sddm_2
-   sudo chown -R $USER:$USER /usr/share/sddm/themes/simple_sddm_2
-   ```
-
-   O `theme.conf` é aplicado pelo `apply`. O fundo do login se escolhe com
-   `sddm-select-wallpaper`.
-
-7. **Fundos dos temas** — os `backgrounds/` dos 22 temas não são versionados
-   (57 MB). Eles vêm do Omarchy:
-
-   ```
-   git clone https://github.com/omacom/omarchy /tmp/omarchy
-   for t in /tmp/omarchy/themes/*/; do
-     n=$(basename "$t")
-     [ -d ~/.local/share/hypr-themes/$n ] && cp -r "$t/backgrounds" ~/.local/share/hypr-themes/$n/
-   done
-   ```
-
-8. **Wallpapers** — `~/Imagens/wallpapers` não é versionado. Restaurar do backup;
-   `wallpapers.txt` lista o que havia.
+- `~/Imagens/wallpapers` (1,1 GB) — restaurar do backup; `wallpapers.txt` lista o que havia
+- O fundo da tela de login — escolher com `sddm-select-wallpaper`
+- O boot (GRUB, UKI, dual-boot) e o DKMS do volante
 
 ## Manutenção
 
