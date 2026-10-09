@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Lista os atalhos do Hyprland que têm descrição (SUPER + K), como o
-# "Keybindings" do Omarchy. A lista vem do arquivo que o bind() do hyprland.lua
-# grava, e não do hyprctl: ele devolve a tecla vazia nos binds com code:NN.
+# Lista os atalhos do Hyprland que têm descrição (SUPER + K), agrupados por
+# seção. A lista vem do arquivo que o bind() do hyprland.lua grava, e não do
+# hyprctl: ele devolve a tecla vazia nos binds com code:NN.
 set -u
 
 state=${XDG_STATE_HOME:-$HOME/.local/state}
@@ -31,11 +31,19 @@ awk -F'\t' '
         return key
     }
     {
-        n = split($1, parts, / *\+ */)
+        n = split($2, parts, / *\+ */)
         combo = ""
         for (i = 1; i <= n; i++) {
             combo = combo (i == 1 ? "" : " + ") (i == n ? keyname(parts[i]) : parts[i])
         }
-        if (!seen[combo FS $2]++) printf "%-34s  %s\n", combo, $2
+        line = sprintf("%-34s  %s", combo, $3)
+        if (seen[$1 FS line]++) next
+        if (!($1 in items)) order[++groups] = $1
+        items[$1] = items[$1] line "\n"
+    }
+    END {
+        for (i = 1; i <= groups; i++) {
+            printf "──  %s\n%s", order[i], items[order[i]]
+        }
     }
 ' "$list" | menu 18

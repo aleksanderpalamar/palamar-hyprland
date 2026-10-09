@@ -302,11 +302,16 @@ hl.gesture({
 local bin = "/home/palamar/.local/bin/"
 
 local shortcuts = {}
+local section = ""
+
+local function group(name)
+    section = name
+end
 
 local function bind(keys, description, action, opts)
     opts = opts or {}
     opts.description = description
-    shortcuts[#shortcuts + 1] = keys .. "\t" .. description
+    shortcuts[#shortcuts + 1] = section .. "\t" .. keys .. "\t" .. description
     if type(action) == "string" then
         action = hl.dsp.exec_cmd(action)
     end
@@ -422,6 +427,7 @@ local function toggle_gaps()
 end
 
 -- Aplicativos
+group("Aplicativos")
 bind("SUPER + RETURN",               "Terminal",                        terminal)
 bind("SUPER + SHIFT + RETURN",       "Navegador",                       browser)
 bind("SUPER + SHIFT + B",            "Navegador",                       browser)
@@ -441,6 +447,7 @@ bind("SUPER + R",                    "Recarregar Hyprland e waybar",    "sh -c '
 bind("SUPER + SHIFT + H",            "Alternar SDR/HDR",                bin .. "hypr-hdr-toggle")
 
 -- Janelas
+group("Janelas")
 bind("SUPER + W",                    "Fechar janela",                   hl.dsp.window.close())
 bind("SUPER + Q",                    "Fechar janela",                   hl.dsp.window.close())
 bind("SUPER + J",                    "Alternar divisão",                hl.dsp.layout("togglesplit"))
@@ -462,37 +469,53 @@ bind("SUPER + SHIFT + up",           "Trocar janela com a de cima",     hl.dsp.w
 bind("SUPER + SHIFT + down",         "Trocar janela com a de baixo",    hl.dsp.window.swap({ direction = "d" }))
 
 -- Workspaces: code:10..19 são as teclas 1..0 pela posição física.
+group("Workspaces")
+local function workspace_key(i)
+    return "code:" .. tostring(i + 9)
+end
+
 for i = 1, 10 do
-    local key = "code:" .. tostring(i + 9)
-    bind("SUPER + " .. key,               "Ir para o workspace " .. i,                hl.dsp.focus({ workspace = tostring(i) }))
-    bind("SUPER + SHIFT + " .. key,       "Mover janela para o workspace " .. i,      hl.dsp.window.move({ workspace = tostring(i) }))
-    bind("SUPER + SHIFT + ALT + " .. key, "Mover janela (sem seguir) para o " .. i,   hl.dsp.window.move({ workspace = tostring(i), follow = false }))
+    bind("SUPER + " .. workspace_key(i), "Ir para o workspace " .. i, hl.dsp.focus({ workspace = tostring(i) }))
+end
+
+for i = 1, 10 do
+    bind("SUPER + SHIFT + " .. workspace_key(i), "Mover janela para o workspace " .. i, hl.dsp.window.move({ workspace = tostring(i) }))
+end
+
+for i = 1, 10 do
+    bind("SUPER + SHIFT + ALT + " .. workspace_key(i), "Mover janela (sem seguir) para o " .. i, hl.dsp.window.move({ workspace = tostring(i), follow = false }))
 end
 
 -- Rascunho (scratchpad). code:49 é a tecla à esquerda do 1.
+group("Rascunho")
 bind("SUPER + S",                    "Mostrar/ocultar rascunho",        hl.dsp.workspace.toggle_special("scratchpad"))
 bind("SUPER + ALT + S",              "Mover janela para o rascunho",    hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
 bind("SUPER + code:49",              "Mostrar/ocultar rascunho",        hl.dsp.workspace.toggle_special("scratchpad"))
 bind("SUPER + SHIFT + code:49",      "Mover janela para o rascunho",    hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
 
+group("Workspaces")
 bind("SUPER + TAB",                  "Próximo workspace",               hl.dsp.focus({ workspace = "e+1" }))
 bind("SUPER + SHIFT + TAB",          "Workspace anterior",              hl.dsp.focus({ workspace = "e-1" }))
 bind("SUPER + CTRL + TAB",           "Último workspace usado",          hl.dsp.focus({ workspace = "previous" }))
 
+group("Monitores")
 bind("SUPER + SHIFT + ALT + left",   "Mover workspace p/ monitor à esquerda", hl.dsp.workspace.move({ monitor = "l" }))
 bind("SUPER + SHIFT + ALT + right",  "Mover workspace p/ monitor à direita",  hl.dsp.workspace.move({ monitor = "r" }))
 bind("SUPER + SHIFT + ALT + up",     "Mover workspace p/ monitor acima",      hl.dsp.workspace.move({ monitor = "u" }))
 bind("SUPER + SHIFT + ALT + down",   "Mover workspace p/ monitor abaixo",     hl.dsp.workspace.move({ monitor = "d" }))
 
+group("Janelas")
 bind("ALT + TAB",                    "Próxima janela",                  hl.dsp.window.cycle_next())
 bind("ALT + SHIFT + TAB",            "Janela anterior",                 hl.dsp.window.cycle_next({ next = false }))
 bind("ALT + TAB",                    "Trazer janela ativa para frente", hl.dsp.window.bring_to_top())
 bind("ALT + SHIFT + TAB",            "Trazer janela ativa para frente", hl.dsp.window.bring_to_top())
 
+group("Monitores")
 bind("CTRL + ALT + TAB",             "Próximo monitor",                 hl.dsp.focus({ monitor = "+1" }))
 bind("CTRL + ALT + SHIFT + TAB",     "Monitor anterior",                hl.dsp.focus({ monitor = "-1" }))
 
 -- Redimensionar: code:20 é a tecla "-" e code:21 a tecla "=".
+group("Janelas")
 bind("SUPER + code:20",                 "Alargar janela",                  hl.dsp.window.resize({ x = -100, y = 0, relative = true }))
 bind("SUPER + code:21",                 "Estreitar janela",                hl.dsp.window.resize({ x = 100, y = 0, relative = true }))
 bind("SUPER + SHIFT + code:20",         "Encurtar janela",                 hl.dsp.window.resize({ x = 0, y = -100, relative = true }))
@@ -506,12 +529,15 @@ bind("SUPER + CTRL + code:21",          "Estreitar janela bastante",       hl.ds
 bind("SUPER + CTRL + SHIFT + code:20",  "Encurtar janela bastante",        hl.dsp.window.resize({ x = 0, y = -300, relative = true }))
 bind("SUPER + CTRL + SHIFT + code:21",  "Alongar janela bastante",         hl.dsp.window.resize({ x = 0, y = 300, relative = true }))
 
+group("Workspaces")
 bind("SUPER + mouse_down",           "Próximo workspace",               hl.dsp.focus({ workspace = "e+1" }))
 bind("SUPER + mouse_up",             "Workspace anterior",              hl.dsp.focus({ workspace = "e-1" }))
+group("Janelas")
 bind("SUPER + mouse:272",            "Mover janela",                    hl.dsp.window.drag(),   { mouse = true })
 bind("SUPER + mouse:273",            "Redimensionar janela",            hl.dsp.window.resize(), { mouse = true })
 
 -- Grupos (abas de janelas)
+group("Grupos de janelas")
 bind("SUPER + G",                    "Agrupar/desagrupar",              hl.dsp.group.toggle())
 bind("SUPER + ALT + G",              "Tirar janela do grupo",           hl.dsp.window.move({ out_of_group = true }))
 bind("SUPER + ALT + left",           "Pôr janela no grupo à esquerda",  hl.dsp.window.move({ into_group = "l" }))
@@ -529,6 +555,7 @@ for index = 1, 5 do
 end
 
 -- Menus e utilidades
+group("Menus e utilidades")
 bind("SUPER + SPACE",                "Pesquisar aplicativos",           launcher)
 bind("SUPER + ALT + SPACE",          "Central de controle",             "qs ipc -c palamar call controlCenter toggle")
 bind("SUPER + ESCAPE",               "Menu do sistema",                 bin .. "hypr-system-menu")
@@ -544,6 +571,7 @@ bind("SUPER + CTRL + L",             "Bloquear a tela",                 "pidof h
 bind("SUPER + CTRL + I",             "Bloqueio por inatividade",        "sh -c 'if pkill -x hypridle; then notify-send -t 2000 \"Bloqueio por inatividade desligado\"; else setsid -f hypridle >/dev/null 2>&1; notify-send -t 2000 \"Bloqueio por inatividade ligado\"; fi; pkill -RTMIN+9 waybar'")
 
 -- Notificações (mako)
+group("Notificações")
 bind("SUPER + comma",                "Dispensar última notificação",    "makoctl dismiss")
 bind("SUPER + SHIFT + comma",        "Dispensar todas as notificações", "makoctl dismiss --all")
 bind("SUPER + CTRL + comma",         "Silenciar notificações",          "sh -c 'makoctl mode -t do-not-disturb; pkill -RTMIN+10 waybar'")
@@ -551,6 +579,7 @@ bind("SUPER + ALT + comma",          "Abrir última notificação",        "mako
 bind("SUPER + SHIFT + ALT + comma",  "Reabrir notificação dispensada",  "makoctl restore")
 
 -- Painéis da barra (quickshell "palamar"), os mesmos do clique nos ícones da waybar
+group("Painéis da barra")
 local panel = "qs ipc -c palamar call panels toggle "
 bind("SUPER + CTRL + A",             "Painel de som",                   panel .. "audio")
 bind("SUPER + CTRL + B",             "Painel de bluetooth",             panel .. "bluetooth")
@@ -560,6 +589,7 @@ bind("SUPER + CTRL + ALT + D",       "Calendário",                      panel .
 bind("SUPER + CTRL + T",             "Monitor do sistema (btop)",       terminal .. " -e btop")
 
 -- Lupa
+group("Lupa")
 bind("SUPER + CTRL + Z", "Aumentar zoom", function()
     local zoom = hl.get_config("cursor.zoom_factor") or 1
     hl.config({ cursor = { zoom_factor = zoom + 1 } })
@@ -569,12 +599,14 @@ bind("SUPER + CTRL + ALT + Z", "Zoom normal", function()
 end)
 
 -- Captura de tela
+group("Captura de tela")
 bind("Print",                        "Captura de uma área",             bin .. "hypr-screenshot region")
 bind("SHIFT + Print",                "Captura da tela inteira",         bin .. "hypr-screenshot full")
 bind("SUPER + Print",                "Captura de uma área",             bin .. "hypr-screenshot region")
 bind("SUPER + SHIFT + Print",        "Captura da janela",               bin .. "hypr-screenshot window")
 
 -- Área de transferência universal
+group("Área de transferência")
 bind("SUPER + A",                    "Selecionar tudo",                 send_shortcut_once("CTRL", "A"))
 bind("SUPER + C",                    "Copiar",                          universal_clipboard_shortcut("C"))
 bind("SUPER + V",                    "Colar",                           universal_clipboard_shortcut("V"))
@@ -582,6 +614,7 @@ bind("SUPER + X",                    "Recortar",                        send_sho
 bind("SUPER + CTRL + V",             "Histórico da área de transferência", bin .. "hypr-clipboard")
 
 -- Volume, brilho e mídia
+group("Volume, brilho e mídia")
 bind("XF86AudioRaiseVolume",         "Aumentar volume",                 "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+", { locked = true, repeating = true })
 bind("XF86AudioLowerVolume",         "Diminuir volume",                 "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",      { locked = true, repeating = true })
 bind("ALT + XF86AudioRaiseVolume",   "Aumentar volume (fino)",          "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 1%+", { locked = true, repeating = true })
