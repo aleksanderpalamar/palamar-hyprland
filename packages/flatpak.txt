@@ -1,0 +1,6 @@
+com.mattjakeman.ExtensionManager
+com.slack.Slack
+md.obsidian.Obsidian
+net.davidotek.pupgui2
+org.gimp.GIMP
+xyz.riothedev.emojify

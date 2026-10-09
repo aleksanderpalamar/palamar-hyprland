@@ -1,0 +1,8 @@
+# Tema do SDDM
+repo   = https://github.com/JaKooLit/simple-sddm-2.git
+commit = fa1ffbd
+destino = /usr/share/sddm/themes/simple_sddm_2
+dono    = palamar:palamar
+
+# O theme.conf esta versionado em system/usr/share/...
+# O fundo do login nao: ele e definido pelo 'sddm-select-wallpaper'.

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Alterna o HDMI-A-1 entre SDR wide-gamut (desktop) e HDR real (filme/jogo).
+#
+# Por que e manual: render.cm_auto_hdr nao dispara nesta LG. O compositor sempre
+# anuncia "srgb / 80 nits" para a surface, entao o player faz o tone mapping
+# HDR->SDR por conta propria e nunca submete conteudo HDR -- o auto-HDR nao tem
+# o que detectar. Testado com mpv --vo=gpu-next em HDR10 real.
+#
+# hyprctl keyword nao serve aqui (config em Lua): "keyword can't work with
+# non-legacy parsers. Use eval."
+set -euo pipefail
+
+OUT="HDMI-A-1"
+MODE="1920x1080@60.00"
+POS="0x0"
+SCALE=1
+
+# $1=cm  $2=sdrbrightness  $3=sdr_min_luminance  $4=sdr_max_luminance
+apply() {
+    hyprctl eval "hl.monitor({
+        output = '$OUT', mode = '$MODE', position = '$POS', scale = $SCALE,
+        bitdepth = 10, cm = '$1',
+        sdrbrightness = $2, sdrsaturation = 1.0,
+        sdr_min_luminance = $3, sdr_max_luminance = $4,
+    })" >/dev/null
+}
+
+preset() {
+    hyprctl -j monitors | jq -r --arg o "$OUT" \
+        '.[] | select(.name==$o) | .colorManagementPreset'
+}
+
+if [ "$(preset)" = "hdr" ]; then
+    apply auto 1.2 0.2 80
+    msg="desktop nitido, 10-bit"
+else
+    # sdr_min=0 mata o piso de preto levantado e sdr_max=250 tira o branco SDR
+    # dos 80 nits -- sem isso o desktop fica com aquele aspecto de fumaca.
+    apply hdr 1.5 0 250
+    msg="para filme/jogo HDR"
+fi
+
+notify-send -t 2500 -a hypr-hdr "Color management: $(preset)" "$msg" 2>/dev/null || true

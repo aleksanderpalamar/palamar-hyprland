@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Menu do sistema (SUPER + ESC), no lugar do "System menu" do Omarchy.
+# Sair, reiniciar e desligar passam pelo hyprshutdown, que fecha os apps antes.
+set -u
+
+choice=$(printf '%s\n' \
+    "󰌾  Bloquear" \
+    "󰤄  Suspender" \
+    "󰍃  Sair da sessão" \
+    "󰜉  Reiniciar" \
+    "󰐥  Desligar" \
+    "󰋩  Wallpaper do login" |
+    fuzzel --dmenu --prompt "Sistema  " --lines 6 --width 28 --no-sort)
+
+case "$choice" in
+    *Bloquear)  pidof hyprlock || hyprlock ;;
+    *Suspender) systemctl suspend ;;
+    *Sair*)     hyprshutdown -t "Saindo..." ;;
+    *Reiniciar) hyprshutdown -t "Reiniciando..." -p "systemctl reboot" ;;
+    *Desligar)  hyprshutdown -t "Desligando..." -p "systemctl poweroff" ;;
+    *Wallpaper*) "$HOME/.local/bin/sddm-select-wallpaper" ;;
+esac

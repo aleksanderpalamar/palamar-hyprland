@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -u
+
+images_root="${XDG_PICTURES_DIR:-$HOME/Imagens}"
+wallpaper_dir="$images_root/wallpapers"
+
+if [[ ! -d "$wallpaper_dir" ]]; then
+    wallpaper_dir="$images_root"
+fi
+
+selected="$({
+    zenity --file-selection \
+        --title="Selecionar wallpaper" \
+        --filename="$wallpaper_dir/" \
+        --file-filter="Imagens | *.png *.jpg *.jpeg *.webp *.jxl" \
+        --file-filter="Todos os arquivos | *"
+} 2>/dev/null)" || exit 0
+
+[[ -n "$selected" && -f "$selected" ]] || exit 0
+
+case "$(file --brief --mime-type -- "$selected")" in
+    image/png|image/jpeg|image/webp|image/jxl) ;;
+    *)
+        zenity --error \
+            --title="Wallpaper incompatível" \
+            --text="Selecione uma imagem PNG, JPEG, WebP ou JPEG XL."
+        exit 1
+        ;;
+esac
+
+# Inicia o hyprpaper caso ele não esteja disponível por algum motivo.
+if ! hyprctl hyprpaper listactive >/dev/null 2>&1; then
+    hyprpaper >/dev/null 2>&1 &
+    for _ in {1..20}; do
+        hyprctl hyprpaper listactive >/dev/null 2>&1 && break
+        sleep 0.1
+    done
+fi
+
+if ! hyprctl hyprpaper wallpaper ",${selected},cover" >/dev/null; then
+    notify-send --urgency=critical "Wallpaper" "Não foi possível aplicar a imagem."
+    exit 1
+fi
+
+# Persiste a escolha para o próximo início do Hyprland.
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/hypr"
+config_file="$config_dir/hyprpaper.conf"
+mkdir -p "$config_dir"
+temporary_config="$(mktemp "$config_dir/.hyprpaper.conf.XXXXXX")"
+trap 'rm -f -- "$temporary_config"' EXIT
+
+{
+    printf '%s\n' '# Wallpaper selecionado pelo atalho SUPER+W.'
+    printf '%s\n' 'wallpaper {'
+    printf '%s\n' '    monitor ='
+    printf '    path = %s\n' "$selected"
+    printf '%s\n' '    fit_mode = cover'
+    printf '%s\n\n' '}'
+    printf '%s\n' 'splash = false'
+    printf '%s\n' 'ipc = true'
+} > "$temporary_config"
+
+mv -- "$temporary_config" "$config_file"
+trap - EXIT
+
+# Mantém o mesmo wallpaper quando a sessão GNOME for utilizada.
+if gsettings list-schemas | grep -qx 'org.gnome.desktop.background'; then
+    gsettings set org.gnome.desktop.background picture-uri "file://${selected}" >/dev/null 2>&1 || true
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://${selected}" >/dev/null 2>&1 || true
+    gsettings set org.gnome.desktop.background picture-options 'zoom' >/dev/null 2>&1 || true
+fi
+
+notify-send "Wallpaper alterado" "$(basename -- "$selected")"

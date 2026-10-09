@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+
+import locale
+import subprocess
+import sys
+
+from gi.repository import Gio, GLib
+
+
+CATEGORIES = (
+    ("all", "Todos os aplicativos", "view-app-grid-symbolic"),
+    ("internet", "Internet", "applications-internet-symbolic"),
+    ("development", "Desenvolvimento", "applications-development-symbolic"),
+    ("games", "Jogos", "applications-games-symbolic"),
+    ("media", "Multimídia e gráficos", "applications-multimedia-symbolic"),
+    ("office", "Escritório", "applications-office-symbolic"),
+    ("settings", "Configurações", "preferences-system-symbolic"),
+    ("system", "Sistema", "applications-system-symbolic"),
+    ("utilities", "Utilitários", "applications-utilities-symbolic"),
+    ("other", "Outros", "applications-other-symbolic"),
+)
+
+
+def primary_category(app_categories: set[str]) -> str:
+    """Assign each desktop application to one predictable menu category."""
+    if "Game" in app_categories:
+        return "games"
+    if app_categories & {"Development", "IDE", "GUIDesigner", "Building", "Debugger"}:
+        return "development"
+    if app_categories & {
+        "AudioVideo", "Audio", "Video", "Graphics", "Photography",
+        "2DGraphics", "3DGraphics", "RasterGraphics", "VectorGraphics",
+    }:
+        return "media"
+    if app_categories & {
+        "Office", "WordProcessor", "Spreadsheet", "Presentation",
+        "Finance", "Calendar", "ContactManagement", "Database",
+    }:
+        return "office"
+    if app_categories & {
+        "Network", "WebBrowser", "Email", "Chat", "InstantMessaging",
+        "Telephony", "RemoteAccess", "FileTransfer", "P2P", "News",
+    }:
+        return "internet"
+    if app_categories & {"Settings", "DesktopSettings"}:
+        return "settings"
+    if app_categories & {
+        "Utility", "FileManager", "TerminalEmulator", "TextEditor",
+        "Calculator", "Archiving", "FileTools", "Clock", "Accessibility",
+    }:
+        return "utilities"
+    if app_categories & {"System", "Security", "Monitor", "PackageManager", "Emulator"}:
+        return "system"
+    return "other"
+
+
+def icon_for(app) -> str:
+    icon = app.get_icon()
+    if icon is None:
+        return "application-x-executable"
+    if isinstance(icon, Gio.ThemedIcon):
+        names = icon.get_names()
+        if names:
+            return ",".join(names)
+    if isinstance(icon, Gio.FileIcon):
+        path = icon.get_file().get_path()
+        if path:
+            return path
+    return icon.to_string() or "application-x-executable"
+
+
+def clean_label(value: str) -> str:
+    return " ".join(value.replace("\t", " ").splitlines()).strip()
+
+
+def installed_apps():
+    apps = []
+    seen_ids = set()
+
+    for app in Gio.AppInfo.get_all():
+        app_id = app.get_id()
+        if not app_id or app_id in seen_ids or not app.should_show():
+            continue
+        if not hasattr(app, "get_categories"):
+            continue
+
+        name = clean_label(app.get_display_name() or app.get_name() or app_id)
+        category_tokens = {
+            item for item in (app.get_categories() or "").split(";") if item
+        }
+        apps.append({
+            "id": app_id,
+            "name": name,
+            "icon": icon_for(app),
+            "category": primary_category(category_tokens),
+            "app": app,
+        })
+        seen_ids.add(app_id)
+
+    try:
+        locale.setlocale(locale.LC_COLLATE, "")
+    except locale.Error:
+        pass
+    apps.sort(key=lambda item: locale.strxfrm(item["name"].casefold()))
+    return apps
+
+
+def choose(rows: list[tuple[str, str, str]], prompt: str, placeholder: str):
+    payload = "".join(
+        f"{row_id}\t{label}\0icon\x1f{icon}\n"
+        for row_id, label, icon in rows
+    ).encode("utf-8")
+
+    result = subprocess.run(
+        [
+            "fuzzel", "--dmenu", "--only-match", "--minimal-lines",
+            "--with-nth=2", "--match-nth=2", "--accept-nth=1",
+            f"--prompt={prompt}: ", f"--placeholder={placeholder}",
+        ],
+        input=payload,
+        stdout=subprocess.PIPE,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout.decode("utf-8").strip() or None
+
+
+def main() -> int:
+    apps = installed_apps()
+    by_id = {item["id"]: item for item in apps}
+    counts = {
+        category_id: sum(item["category"] == category_id for item in apps)
+        for category_id, _, _ in CATEGORIES
+    }
+    counts["all"] = len(apps)
+
+    if "--dry-run" in sys.argv:
+        for category_id, label, _ in CATEGORIES:
+            print(f"{label}: {counts[category_id]}")
+        return 0
+
+    category_rows = [
+        (category_id, f"{label} ({counts[category_id]})", icon)
+        for category_id, label, icon in CATEGORIES
+        if category_id == "all" or counts[category_id] > 0
+    ]
+    selected_category = choose(
+        category_rows,
+        "Categorias",
+        "Escolha uma categoria",
+    )
+    if selected_category is None:
+        return 0
+
+    filtered_apps = [
+        item for item in apps
+        if selected_category == "all" or item["category"] == selected_category
+    ]
+    app_rows = [
+        (item["id"], item["name"], item["icon"])
+        for item in filtered_apps
+    ]
+    selected_app_id = choose(
+        app_rows,
+        "Aplicativos",
+        "Digite para pesquisar",
+    )
+    if selected_app_id is None or selected_app_id not in by_id:
+        return 0
+
+    try:
+        by_id[selected_app_id]["app"].launch([], None)
+    except GLib.Error as error:
+        subprocess.run(
+            [
+                "notify-send", "--urgency=critical", "Falha ao abrir aplicativo",
+                str(error),
+            ],
+            check=False,
+        )
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

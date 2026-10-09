@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Wayland-native screenshots: full display, selected region or active window.
+set -u
+
+mode="${1:-region}"
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+user_dirs="$config_home/user-dirs.dirs"
+
+if [[ -f "$user_dirs" ]]; then
+    # shellcheck disable=SC1090
+    source "$user_dirs"
+fi
+
+captures_dir="${XDG_PICTURES_DIR:-$HOME/Imagens}/Capturas de tela"
+mkdir -p "$captures_dir"
+file="$captures_dir/Captura_de_tela_$(date +%Y-%m-%d_%H-%M-%S-%3N).png"
+
+case "$mode" in
+    full)
+        grim "$file"
+        ;;
+    region)
+        geometry="$(slurp -d)" || exit 0
+        grim -g "$geometry" "$file"
+        ;;
+    window)
+        geometry="$(hyprctl -j activewindow | jq -r 'if (.at | length) == 2 and (.size | length) == 2 then "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])" else empty end')"
+        [[ -n "$geometry" ]] || {
+            notify-send --urgency=normal "Captura de tela" "Nenhuma janela ativa para capturar."
+            exit 1
+        }
+        grim -g "$geometry" "$file"
+        ;;
+    *)
+        printf 'Uso: %s {full|region|window}\n' "$0" >&2
+        exit 2
+        ;;
+esac
+
+wl-copy --type image/png < "$file"
+notify-send --app-name=Hyprland --icon=image-x-generic "Captura de tela" "Salva e copiada para a área de transferência."

@@ -1,0 +1,20 @@
+[Default Applications]
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/claude=com.anthropic.Claude.desktop
+application/pdf=firefox.desktop
+x-scheme-handler/codex=chatgpt.desktop
+image/png=org.gnome.Loupe.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
+image/jpeg=org.gnome.Loupe.desktop
+video/mp4=vlc.desktop
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
+
+[Added Associations]
+application/pdf=firefox.desktop;
+image/png=org.gnome.Loupe.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+video/mp4=vlc.desktop;

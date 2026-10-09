@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+
+# Menu para escolher o wallpaper da tela de login (SDDM).
+#
+# O SDDM roda como o usuario "sddm", que NAO consegue ler /home/palamar (drwx------).
+# Por isso a imagem escolhida e convertida para dentro da pasta do tema, em
+# /usr/share/sddm/themes/<tema>/, que e world-readable. O tema atual foi instalado
+# a mao e pertence ao seu usuario, entao isso nao pede sudo.
+
+set -u
+
+conf=/etc/sddm.conf
+themes_dir=/usr/share/sddm/themes
+
+aviso() { notify-send -a "SDDM" "$1" "${2:-}"; }
+
+# Tema ativo e o caminho do fundo que o theme.conf declara.
+theme=$(awk -F= '/^\s*Current\s*=/{gsub(/[ "]/,"",$2); print $2; exit}' "$conf" 2>/dev/null)
+[[ -n $theme && -d $themes_dir/$theme ]] || { aviso "Tema do SDDM não encontrado" "Current= em $conf"; exit 1; }
+theme_dir=$themes_dir/$theme
+
+rel=$(awk -F= '/^\s*Background\s*=/{gsub(/[ "]/,"",$2); print $2; exit}' "$theme_dir/theme.conf" 2>/dev/null)
+[[ -n $rel ]] || rel="Backgrounds/default"
+alvo=$theme_dir/$rel
+
+[[ -w $(dirname "$alvo") ]] || { aviso "Sem permissão de escrita" "$(dirname "$alvo")"; exit 1; }
+
+# Guarda o fundo original uma unica vez, para o "restaurar padrao".
+[[ -f $alvo && ! -f $alvo.orig ]] && cp -- "$alvo" "$alvo.orig"
+
+aplicar() {
+    local src=$1 tmp
+    [[ -f $src ]] || { aviso "Imagem não encontrada" "$src"; return 1; }
+    case "$(file --brief --mime-type -- "$src")" in
+        image/png|image/jpeg|image/webp|image/jxl|image/avif) ;;
+        *) aviso "Formato incompatível" "Use PNG, JPEG, WebP, AVIF ou JXL."; return 1 ;;
+    esac
+
+    # Resolucao do monitor ativo, com 1920x1080 como reserva.
+    local res w h
+    res=$(hyprctl -j monitors 2>/dev/null | jq -r '.[0] | "\(.width)x\(.height)"' 2>/dev/null)
+    [[ $res =~ ^[0-9]+x[0-9]+$ ]] || res=1920x1080
+    w=${res%x*}; h=${res#*x}
+
+    tmp=$(mktemp "$(dirname "$alvo")/.wallpaper.XXXXXX") || return 1
+    # Converte sempre para PNG: o Qt do SDDM nao le JXL/AVIF, e o nome do arquivo
+    # nao tem extensao (o Qt detecta pelo conteudo).
+    if magick "$src" -auto-orient -resize "${w}x${h}^" -gravity center -extent "${w}x${h}" PNG24:"$tmp" 2>/dev/null; then
+        chmod 644 "$tmp"
+        mv -f -- "$tmp" "$alvo"          # troca atomica: o SDDM nunca ve meio arquivo
+        printf '%s\n' "$src" > ~/.local/state/sddm-wallpaper.src 2>/dev/null
+        aviso "Wallpaper do login atualizado" "$(basename "$src")"
+    else
+        rm -f -- "$tmp"
+        aviso "Falha ao converter a imagem" "$(basename "$src")"
+        return 1
+    fi
+}
+
+escolher_arquivo() {
+    local dir=${XDG_PICTURES_DIR:-$HOME/Imagens}/wallpapers
+    [[ -d $dir ]] || dir=${XDG_PICTURES_DIR:-$HOME/Imagens}
+    local sel
+    sel=$(zenity --file-selection \
+        --title="Wallpaper da tela de login" \
+        --filename="$dir/" \
+        --file-filter="Imagens | *.png *.jpg *.jpeg *.webp *.jxl *.avif" \
+        --file-filter="Todos os arquivos | *" 2>/dev/null) || exit 0
+    [[ -n $sel ]] && aplicar "$sel"
+}
+
+usar_do_desktop() {
+    # O waypaper mantem este link apontando para o wallpaper atual do desktop.
+    local atual=~/.config/hypr/current/background
+    if [[ -e $atual ]]; then
+        aplicar "$(readlink -f "$atual")"
+    else
+        aviso "Wallpaper do desktop não encontrado" "$atual"
+    fi
+}
+
+restaurar() {
+    if [[ -f $alvo.orig ]]; then
+        cp -- "$alvo.orig" "$alvo" && aviso "Wallpaper do login restaurado" "Padrão do tema $theme"
+    else
+        aviso "Não há padrão guardado" "Nada para restaurar."
+    fi
+}
+
+case "${1:-}" in
+    --file)    escolher_arquivo; exit ;;
+    --desktop) usar_do_desktop; exit ;;
+    --reset)   restaurar; exit ;;
+esac
+
+opcao=$(printf '%s\n' \
+    "󰋩  Escolher uma imagem…" \
+    "󰸉  Usar o wallpaper atual do desktop" \
+    "󰑓  Restaurar o padrão do tema" |
+    fuzzel --dmenu --prompt "Login (SDDM)  " --lines 3 --width 38 --no-sort)
+
+case "$opcao" in
+    *Escolher*)  escolher_arquivo ;;
+    *desktop)    usar_do_desktop ;;
+    *Restaurar*) restaurar ;;
+esac

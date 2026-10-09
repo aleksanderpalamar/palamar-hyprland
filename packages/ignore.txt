@@ -1,0 +1,9 @@
+# Instalados nesta maquina, mas fora do ambiente reproduzivel.
+# O 'packages capture' nunca traz estes de volta para as listas.
+
+astra-browser
+chatgpt
+claude-desktop-bin
+leshade-bin
+openlogi
+reshade-shaders-git

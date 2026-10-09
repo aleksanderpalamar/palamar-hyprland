@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Clipboard history UI. It becomes fully active when cliphist is installed.
+set -u
+
+if ! command -v cliphist >/dev/null 2>&1; then
+    notify-send --urgency=normal --app-name=Hyprland "Histórico da área de transferência" "Instale o pacote 'cliphist' para ativar o histórico."
+    exit 0
+fi
+
+clear_item="󰆴  Limpar todo o histórico"
+
+clear_history() {
+    confirmation="$(printf '%s\n%s\n' 'Cancelar' "$clear_item" | fuzzel --dmenu --prompt='Limpar histórico?  ' --width=38 --lines=2 --no-run-if-empty)" || return 0
+    [[ "$confirmation" == "$clear_item" ]] || return 0
+
+    cliphist wipe
+    wl-copy --clear
+    notify-send --app-name=Hyprland "Histórico da área de transferência" "Histórico e conteúdo atual limpos."
+}
+
+if [[ "${1:-}" == "--clear" ]]; then
+    clear_history
+    exit 0
+fi
+
+selection="$({ printf '%s\n' "$clear_item"; cliphist list; } | fuzzel --dmenu --prompt='Área de transferência  ' --placeholder='Pesquisar histórico…' --width=52 --lines=10 --no-run-if-empty)" || exit 0
+[[ -n "$selection" ]] || exit 0
+
+if [[ "$selection" == "$clear_item" ]]; then
+    clear_history
+    exit 0
+fi
+
+printf '%s' "$selection" | cliphist decode | wl-copy

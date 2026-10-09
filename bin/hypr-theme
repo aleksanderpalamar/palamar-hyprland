@@ -1,0 +1,408 @@
+#!/usr/bin/env python3
+
+"""Troca de tema e de papel de parede no estilo do Omarchy, sem o Omarchy.
+
+Os temas (cores, ícones, prévia e papéis de parede) ficam em
+~/.local/share/hypr-themes/<tema>/, copiados de ~/Projetos/omarchy/themes.
+Os modelos de cada programa ficam em ~/.config/hypr-theme/templates/ e o
+resultado vai para ~/.local/state/hypr-theme/, que as configs incluem.
+
+Uso:
+  hypr-theme list [--json]          temas disponíveis
+  hypr-theme current                tema atual
+  hypr-theme set <tema>             aplica um tema em tudo
+  hypr-theme refresh                regera e reaplica o tema atual
+  hypr-theme backgrounds [--json]   papéis de parede do tema atual + ~/Imagens
+  hypr-theme bg <arquivo|next>      troca o papel de parede
+"""
+
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tomllib
+import zlib
+from pathlib import Path
+
+HOME = Path.home()
+THEMES = HOME / ".local/share/hypr-themes"
+TEMPLATES = HOME / ".config/hypr-theme/templates"
+STATE = HOME / ".local/state/hypr-theme"
+STATE_FILE = STATE / "state.json"
+WALLPAPER_LINK = HOME / ".config/hypr/current/background"
+PICTURES = HOME / "Imagens"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}
+
+OUTPUTS = {
+    "hyprland.lua.tpl": STATE / "hyprland.lua",
+    "waybar.css.tpl": STATE / "waybar.css",
+    "mako.ini.tpl": STATE / "mako.ini",
+    "fuzzel.ini.tpl": STATE / "fuzzel.ini",
+    "hyprlock.conf.tpl": STATE / "hyprlock.conf",
+    "quickshell.json.tpl": STATE / "quickshell.json",
+    "kitty.conf.tpl": STATE / "kitty.conf",
+    "btop.theme.tpl": HOME / ".config/btop/themes/hypr-theme.theme",
+    "vscode-theme.json.tpl": STATE / "vscode-theme.json",
+}
+
+LABELS = {
+    "rose-pine": "Rosé Pine",
+    "retro-82": "Retro 82",
+}
+
+
+# --- estado -----------------------------------------------------------------
+
+def load_state():
+    try:
+        return json.loads(STATE_FILE.read_text())
+    except (OSError, ValueError):
+        return {}
+
+
+def save_state(state):
+    STATE.mkdir(parents=True, exist_ok=True)
+    write_file(STATE_FILE, json.dumps(state, indent=2, ensure_ascii=False) + "\n")
+
+
+def write_file(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def run(*command, quiet=True):
+    try:
+        return subprocess.run(command, capture_output=quiet, text=True, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+
+def detach(*command):
+    try:
+        subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                         stdin=subprocess.DEVNULL, start_new_session=True)
+    except OSError:
+        pass
+
+
+# --- temas e cores ------------------------------------------------------------
+
+def theme_names():
+    return sorted(p.name for p in THEMES.iterdir() if (p / "colors.toml").is_file())
+
+
+def label_for(name):
+    return LABELS.get(name, name.replace("-", " ").title())
+
+
+def normalize_hex(value):
+    value = value.strip()
+    if re.fullmatch(r"#[0-9a-fA-F]{6}", value):
+        return value.lower()
+    if re.fullmatch(r"#[0-9a-fA-F]{3}", value):
+        return "#" + "".join(c * 2 for c in value[1:]).lower()
+    return value
+
+
+def load_colors(name):
+    theme_dir = THEMES / name
+    raw = tomllib.loads((theme_dir / "colors.toml").read_text())
+    colors = {key: normalize_hex(str(value)) for key, value in raw.items()}
+    # Mesmas derivações do omarchy-theme-color.
+    colors.setdefault("selection_background", colors.get("selection", colors["background"]))
+    colors.setdefault("selection_foreground", colors.get("bright_foreground", colors["foreground"]))
+    colors.setdefault("orange", colors["yellow"])
+    colors.setdefault("brown", mix(colors["orange"], "#000000", 0.5))
+    colors["mode"] = colors.get("mode", "dark")
+    colors["theme_type"] = colors["mode"]
+    icons = theme_dir / "icons.theme"
+    colors["icons"] = icons.read_text().strip() if icons.is_file() else "Yaru-blue"
+    return colors
+
+
+def hex_to_rgb(value):
+    value = value.lstrip("#")
+    return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def mix(a, b, fraction):
+    ra, rb = hex_to_rgb(a), hex_to_rgb(b)
+    return "#" + "".join(f"{round(x + (y - x) * fraction):02x}" for x, y in zip(ra, rb))
+
+
+def hypr_color(value):
+    if value.startswith("#"):
+        return f"rgb({value[1:]})"
+    return value
+
+
+def hypr_gradient(colors, key, fallback):
+    spec = colors.get(key) or colors.get(fallback, fallback)
+    parts = spec.split()
+    angle = None
+    stops = []
+    for part in parts:
+        if re.fullmatch(r"-?\d+(\.\d+)?deg", part):
+            angle = part[:-3]
+        else:
+            stops.append(hypr_color(normalize_hex(colors.get(part, part))))
+    if len(stops) == 1:
+        return f'"{stops[0]}"'
+    lua = "{ colors = { " + ", ".join(f'"{s}"' for s in stops) + " }"
+    if angle:
+        lua += f", angle = {angle}"
+    return lua + " }"
+
+
+def render(template, colors):
+    def token(match):
+        parts = match.group(1).split()
+        if parts[0] == "hypr_gradient":
+            return hypr_gradient(colors, parts[1], parts[2])
+        if parts[0] == "mix":
+            return mix(colors[parts[1]], colors[parts[2]], float(parts[3].rstrip("%")) / 100)
+        key = parts[0]
+        if key in colors:
+            return colors[key]
+        if key.endswith("_rgb") and key[:-4] in colors:
+            return ", ".join(str(c) for c in hex_to_rgb(colors[key[:-4]]))
+        if key.endswith("_strip") and key[:-6] in colors:
+            return colors[key[:-6]].lstrip("#")
+        raise KeyError(f"cor desconhecida no modelo: {key}")
+
+    return re.sub(r"\{\{\s*(.+?)\s*\}\}", token, template)
+
+
+# --- papéis de parede -----------------------------------------------------------
+
+def theme_backgrounds(name):
+    folder = THEMES / name / "backgrounds"
+    if not folder.is_dir():
+        return []
+    return sorted(p for p in folder.iterdir() if p.suffix.lower() in IMAGE_EXTENSIONS)
+
+
+def personal_backgrounds():
+    if not PICTURES.is_dir():
+        return []
+    return sorted(p for p in PICTURES.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS)
+
+
+def current_background():
+    try:
+        return str(WALLPAPER_LINK.resolve())
+    except OSError:
+        return ""
+
+
+def set_background(path, remember=True):
+    path = Path(path).expanduser().resolve()
+    if not path.is_file():
+        sys.exit(f"hypr-theme: arquivo não encontrado: {path}")
+    WALLPAPER_LINK.parent.mkdir(parents=True, exist_ok=True)
+    tmp = WALLPAPER_LINK.with_name("background.tmp")
+    if tmp.is_symlink() or tmp.exists():
+        tmp.unlink()
+    tmp.symlink_to(path)
+    os.replace(tmp, WALLPAPER_LINK)
+    run("hyprctl", "hyprpaper", "wallpaper", f",{path},cover")
+
+    # Mantém o Waypaper apontando para a mesma imagem.
+    waypaper = HOME / ".config/waypaper/config.ini"
+    if waypaper.is_file():
+        text = waypaper.read_text()
+        text = re.sub(r"(?m)^wallpaper = .*$", f"wallpaper = {path}", text)
+        write_file(waypaper, text)
+
+    if remember:
+        state = load_state()
+        theme = state.get("theme")
+        if theme:
+            state.setdefault("backgrounds", {})[theme] = str(path)
+            save_state(state)
+
+
+# --- aplicação --------------------------------------------------------------------
+
+def apply_gtk(colors):
+    light = colors["mode"] == "light"
+    gtk_theme = "adw-gtk3" if light else "adw-gtk3-dark"
+    run("gsettings", "set", "org.gnome.desktop.interface", "color-scheme", "prefer-light" if light else "prefer-dark")
+    run("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtk_theme)
+    run("gsettings", "set", "org.gnome.desktop.interface", "icon-theme", colors["icons"])
+    for folder in ("gtk-3.0", "gtk-4.0"):
+        ini = HOME / ".config" / folder / "settings.ini"
+        if not ini.is_file():
+            continue
+        text = ini.read_text()
+        text = re.sub(r"(?m)^gtk-icon-theme-name=.*$", f"gtk-icon-theme-name={colors['icons']}", text)
+        text = re.sub(r"(?m)^gtk-theme-name=.*$", f"gtk-theme-name={gtk_theme}", text)
+        text = re.sub(r"(?m)^gtk-application-prefer-dark-theme=.*$", f"gtk-application-prefer-dark-theme={0 if light else 1}", text)
+        write_file(ini, text)
+
+
+def register_vscode_extension(ext_dir, version):
+    extensions_file = ext_dir.parent / "extensions.json"
+    try:
+        entries = json.loads(extensions_file.read_text())
+    except (OSError, ValueError):
+        entries = []
+    entries = [e for e in entries if e.get("identifier", {}).get("id") != "local.hypr-theme"]
+    entries.append({
+        "identifier": {"id": "local.hypr-theme"},
+        "version": version,
+        "location": {"$mid": 1, "fsPath": str(ext_dir), "external": f"file://{ext_dir}", "path": str(ext_dir), "scheme": "file"},
+        "relativeLocation": ext_dir.name,
+    })
+    write_file(extensions_file, json.dumps(entries))
+
+
+def apply_vscode(name, colors):
+    settings = HOME / ".config/Code/User/settings.json"
+    if not shutil.which("code") or not settings.is_file():
+        return
+
+    descriptor = THEMES / name / "vscode.json"
+    if descriptor.is_file():
+        data = json.loads(descriptor.read_text())
+        theme_name = data.get("name", "")
+        extension = data.get("extension", "")
+        if extension and re.fullmatch(r"[A-Za-z0-9._-]+", extension):
+            installed = run("code", "--list-extensions")
+            if installed and extension.lower() not in installed.stdout.lower().split():
+                # Como no Omarchy: instala a extensão do tema se ainda não estiver instalada.
+                detach("code", "--install-extension", extension)
+    else:
+        # Tema sem extensão própria: gera um tema local a partir das cores, como o Omarchy faz.
+        generated = (STATE / "vscode-theme.json").read_text()
+        ext_dir = HOME / ".vscode/extensions/hypr-theme"
+        version = "1.0." + str(zlib.crc32(generated.encode()))
+        (ext_dir / "themes").mkdir(parents=True, exist_ok=True)
+        (ext_dir / "themes/hypr-color-theme.json").write_text(generated)
+        package = {
+            "name": "hypr-theme", "displayName": "Hypr Theme", "publisher": "local", "version": version,
+            "engines": {"vscode": "^1.70.0"}, "categories": ["Themes"],
+            "contributes": {"themes": [{"label": "Hypr Theme", "uiTheme": "vs" if colors["mode"] == "light" else "vs-dark",
+                                        "path": "./themes/hypr-color-theme.json", "_watch": True}]},
+        }
+        (ext_dir / "package.json").write_text(json.dumps(package, indent=2))
+        register_vscode_extension(ext_dir, version)
+        theme_name = "Hypr Theme"
+
+    if not theme_name or re.search(r'["\\\x00-\x1f]', theme_name):
+        return
+    # settings.json é JSONC: troca só o valor, sem reformatar o resto do arquivo.
+    text = settings.read_text()
+    if re.search(r'"workbench\.colorTheme"\s*:', text):
+        text = re.sub(r'("workbench\.colorTheme"\s*:\s*")[^"]*(")', lambda m: m.group(1) + theme_name + m.group(2), text)
+    else:
+        text = text.replace("{", '{\n  "workbench.colorTheme": "' + theme_name + '",', 1)
+    write_file(settings, text)
+
+
+def reload_programs():
+    run("hyprctl", "reload")
+    run("pkill", "-SIGUSR2", "-x", "waybar")
+    run("makoctl", "reload")
+    run("pkill", "-SIGUSR1", "-x", "kitty")
+    # O quickshell também percebe a mudança do quickshell.json sozinho; isto é garantia.
+    run("qs", "ipc", "-c", "palamar", "call", "theme", "reload")
+    # O btop, o fuzzel e o hyprlock leem o tema ao abrir.
+
+
+def render_all(name):
+    colors = load_colors(name)
+    for template_name, output in OUTPUTS.items():
+        template = (TEMPLATES / template_name).read_text()
+        write_file(output, render(template, colors))
+    return colors
+
+
+def set_theme(name, notify=True):
+    if name not in theme_names():
+        sys.exit(f"hypr-theme: tema desconhecido: {name}\nTemas: {', '.join(theme_names())}")
+
+    colors = render_all(name)
+    state = load_state()
+    state["theme"] = name
+    save_state(state)
+
+    remembered = state.get("backgrounds", {}).get(name)
+    backgrounds = theme_backgrounds(name)
+    if remembered and Path(remembered).is_file():
+        set_background(remembered, remember=False)
+    elif backgrounds:
+        set_background(backgrounds[0], remember=False)
+
+    apply_gtk(colors)
+    apply_vscode(name, colors)
+    reload_programs()
+    if notify:
+        detach("notify-send", "-t", "2500", "-a", "hypr-theme", f"Tema: {label_for(name)}")
+
+
+# --- linha de comando ---------------------------------------------------------------
+
+def main(argv):
+    command = argv[1] if len(argv) > 1 else "current"
+    as_json = "--json" in argv
+    state = load_state()
+    current = state.get("theme", "")
+
+    if command == "list":
+        rows = []
+        for name in theme_names():
+            preview = THEMES / name / "preview.png"
+            backgrounds = theme_backgrounds(name)
+            rows.append({
+                "name": name,
+                "label": label_for(name),
+                "preview": str(preview if preview.is_file() else (backgrounds[0] if backgrounds else "")),
+                "mode": load_colors(name)["mode"],
+                "current": name == current,
+            })
+        if as_json:
+            print(json.dumps(rows, ensure_ascii=False))
+        else:
+            for row in rows:
+                print(("* " if row["current"] else "  ") + row["name"])
+    elif command == "current":
+        print(current)
+    elif command == "set" and len(argv) > 2:
+        set_theme(argv[2])
+    elif command == "render" and len(argv) > 2:
+        # Só gera os arquivos, sem aplicar nada (para conferir os modelos).
+        render_all(argv[2])
+    elif command == "refresh":
+        set_theme(current or "tokyo-night", notify=False)
+    elif command == "backgrounds":
+        active = current_background()
+        rows = [{"path": str(p), "label": p.stem, "current": str(p) == active}
+                for p in theme_backgrounds(current) + personal_backgrounds()]
+        if as_json:
+            print(json.dumps(rows, ensure_ascii=False))
+        else:
+            for row in rows:
+                print(("* " if row["current"] else "  ") + row["path"])
+    elif command == "bg" and len(argv) > 2:
+        if argv[2] == "next":
+            backgrounds = theme_backgrounds(current)
+            if not backgrounds:
+                return
+            paths = [str(p) for p in backgrounds]
+            active = current_background()
+            index = (paths.index(active) + 1) % len(paths) if active in paths else 0
+            set_background(paths[index])
+        else:
+            set_background(argv[2])
+    else:
+        print(__doc__.strip())
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main(sys.argv)

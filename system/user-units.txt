@@ -1,0 +1,11 @@
+# Units de usuario habilitadas nesta maquina.
+# A maioria vem habilitada pelos proprios pacotes; confira antes de habilitar na mao.
+
+openlogi-agent.service
+pipewire.service
+wireplumber.service
+xdg-user-dirs.service
+gnome-keyring-daemon.socket
+p11-kit-server.socket
+pipewire-pulse.socket
+pipewire.socket

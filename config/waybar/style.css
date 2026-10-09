@@ -1,0 +1,87 @@
+/* Barra do Omarchy (config/waybar/style.css). As cores vêm do tema atual (hypr-theme). */
+@import "/home/palamar/.local/state/hypr-theme/waybar.css";
+
+* {
+  background-color: @background;
+  color: @foreground;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 12px;
+}
+
+.modules-left {
+  margin-left: 8px;
+}
+
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
+}
+
+/* Omarchy 4: cada ícone ocupa um espaço fixo de 27px com fonte de 13px. */
+#bluetooth,
+#network,
+#pulseaudio,
+#custom-monitor,
+#custom-omarchy {
+  min-width: 27px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+
+#tray {
+  margin-right: 16px;
+}
+
+#custom-expand-icon {
+  margin-right: 18px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#clock {
+  margin-left: 8.75px;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#custom-idle-indicator,
+#custom-notification-silencing-indicator {
+  min-width: 12px;
+  margin-left: 5px;
+  margin-right: 0;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: #a55555;
+}
+
+#custom-expand-icon.vertical {
+  opacity: 0;
+  font-size: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}

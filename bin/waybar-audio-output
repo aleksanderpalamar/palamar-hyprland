@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -u
+
+default_sink="$(pactl get-default-sink 2>/dev/null)"
+declare -a sink_names=()
+declare -a sink_descriptions=()
+declare -a menu_entries=()
+
+while IFS=$'\t' read -r sink_name sink_description; do
+    [[ -n "$sink_name" ]] || continue
+
+    sink_names+=("$sink_name")
+    sink_descriptions+=("$sink_description")
+
+    if [[ "$sink_name" == "$default_sink" ]]; then
+        menu_entries+=("✓  $sink_description")
+    else
+        menu_entries+=("   $sink_description")
+    fi
+done < <(
+    LC_ALL=C pactl list sinks | awk '
+        function emit() {
+            if (name != "") {
+                if (description == "") description = name
+                print name "\t" description
+            }
+        }
+        /^Sink #[0-9]+/ {
+            emit()
+            name = ""
+            description = ""
+            next
+        }
+        /^\tName: / {
+            sub(/^\tName: /, "")
+            name = $0
+            next
+        }
+        /^\tDescription: / {
+            sub(/^\tDescription: /, "")
+            description = $0
+        }
+        END { emit() }
+    '
+)
+
+if ((${#menu_entries[@]} == 0)); then
+    notify-send -a Waybar -i audio-speakers "Áudio" "Nenhuma saída encontrada"
+    exit 1
+fi
+
+menu_lines=${#menu_entries[@]}
+((menu_lines > 8)) && menu_lines=8
+
+choice="$(
+    printf '%s\n' "${menu_entries[@]}" |
+        fuzzel --dmenu --prompt="Saída de áudio: " --lines="$menu_lines" --width=58
+)" || exit 0
+
+for index in "${!menu_entries[@]}"; do
+    [[ "$choice" == "${menu_entries[$index]}" ]] || continue
+
+    selected_sink="${sink_names[$index]}"
+    pactl set-default-sink "$selected_sink"
+
+    while read -r input_id _; do
+        [[ -n "$input_id" ]] && pactl move-sink-input "$input_id" "$selected_sink"
+    done < <(pactl list short sink-inputs)
+
+    notify-send -a Waybar -i audio-speakers \
+        "Saída de áudio alterada" "${sink_descriptions[$index]}"
+    exit 0
+done

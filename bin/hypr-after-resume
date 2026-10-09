@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Restaura a tela e recria a dock, que pode manter o processo vivo mas
+# perder sua layer-shell após suspensão ou desligamento do monitor.
+runtime_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+state_dir="${XDG_STATE_HOME:-/home/palamar/.local/state}/hyprland"
+log_file="$state_dir/after-resume.log"
+
+mkdir -p "$state_dir"
+
+# after_sleep_cmd e on-resume podem disparar quase juntos. Apenas uma
+# recuperação deve manipular a dock por vez.
+exec 9>"$runtime_dir/hypr-dock-resume.lock"
+flock -n 9 || exit 0
+
+exec >>"$log_file" 2>&1
+echo "[$(date --iso-8601=seconds)] iniciando recuperacao pos-retomada"
+
+hyprctl dispatch 'hl.dsp.dpms({ action = "on" })'
+sleep 1
+
+for attempt in 1 2 3; do
+    echo "[$(date --iso-8601=seconds)] tentativa $attempt"
+
+    pkill -f '^nwg-dock-hyprland' || true
+    sleep 0.5
+    hyprctl dispatch 'hl.dsp.exec_cmd("/home/palamar/.config/nwg-dock-hyprland/launch.sh")'
+    sleep 1
+
+    if hyprctl layers 2>/dev/null | rg -q 'namespace: (hotspot|nwg-dock)'; then
+        echo "[$(date --iso-8601=seconds)] dock restaurada"
+        exit 0
+    fi
+
+    sleep 1
+done
+
+echo "[$(date --iso-8601=seconds)] falha ao restaurar a dock apos 3 tentativas"
+exit 1
