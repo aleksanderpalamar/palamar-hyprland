@@ -429,7 +429,6 @@ end
 -- Aplicativos
 group("Aplicativos")
 bind("SUPER + RETURN",               "Terminal",                        terminal)
-bind("SUPER + SHIFT + RETURN",       "Navegador",                       browser)
 bind("SUPER + SHIFT + B",            "Navegador",                       browser)
 bind("SUPER + SHIFT + ALT + B",      "Navegador (privado)",             browser .. " --private-window")
 bind("SUPER + SHIFT + F",            "Gerenciador de arquivos",         fileManager .. " --new-window")
