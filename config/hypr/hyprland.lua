@@ -439,8 +439,6 @@ bind("SUPER + SHIFT + O",            "Obsidian",                        "flatpak
 bind("SUPER + SHIFT + A",            "ChatGPT",                         "gtk-launch chatgpt")
 
 -- Atalhos que já eram seus e não colidem com os do Omarchy
-bind("SUPER + E",                    "Gerenciador de arquivos",         fileManager)
-bind("SUPER + B",                    "Navegador",                       browser)
 bind("SUPER + M",                    "Aplicativos por categoria",       menu)
 bind("SUPER + R",                    "Recarregar Hyprland e waybar",    "sh -c 'hyprctl reload; pkill -SIGUSR2 waybar'")
 bind("SUPER + SHIFT + H",            "Alternar SDR/HDR",                bin .. "hypr-hdr-toggle")
