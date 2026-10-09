@@ -6,6 +6,7 @@ REPO_DIR="${PALAMAR_HYPRLAND_DIR:-$HOME/Projetos/palamar-hyprland}"
 SDDM_THEME_URL="https://github.com/JaKooLit/simple-sddm-2.git"
 SDDM_THEME_DIR="/usr/share/sddm/themes/simple_sddm_2"
 THEMES_DIR="$HOME/.local/share/hypr-themes"
+OMZ_DIR="$HOME/.oh-my-zsh"
 
 DRY_RUN=0
 [[ ${1:-} == "--dry-run" ]] && DRY_RUN=1
@@ -72,6 +73,26 @@ link_user_configs() {
     cli apply
 }
 
+clone_into() {
+    local url=$1 dir=$2
+    [[ -d $dir ]] && return 0
+    run git clone --depth=1 "$url" "$dir"
+}
+
+ensure_shell() {
+    step "Shell (zsh, oh-my-zsh, powerlevel10k)"
+    clone_into https://github.com/ohmyzsh/ohmyzsh.git "$OMZ_DIR"
+    clone_into https://github.com/romkatv/powerlevel10k.git "$OMZ_DIR/custom/themes/powerlevel10k"
+    clone_into https://github.com/zsh-users/zsh-autosuggestions "$OMZ_DIR/custom/plugins/zsh-autosuggestions"
+    clone_into https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_DIR/custom/plugins/zsh-syntax-highlighting"
+
+    if [[ $SHELL == */zsh ]]; then
+        skip "zsh já é o shell de login"
+        return
+    fi
+    run sudo chsh -s /usr/bin/zsh "$USER"
+}
+
 refresh_fonts() {
     step "Fontes"
     run fc-cache -f
@@ -110,8 +131,8 @@ finish() {
     step "Pronto"
     cat <<'EOF'
     Falta apenas o que não cabe no repositório:
-      - ~/Imagens/wallpapers (ver wallpapers.txt)
-      - o fundo da tela de login: sddm-select-wallpaper
+      - ~/Imagens/wallpapers: sua coleção pessoal (ver wallpapers.txt).
+        O papel de parede em uso vem dos temas e já está aplicado.
 
     Saia da sessão e entre pelo Hyprland.
 EOF
@@ -124,6 +145,7 @@ main() {
     ensure_yay
     build_cli
     install_packages
+    ensure_shell
     link_user_configs
     refresh_fonts
     ensure_sddm_theme

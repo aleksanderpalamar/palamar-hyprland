@@ -30,7 +30,16 @@ include = [
   "~/.local/bin/hypr-theme",
   "~/.local/bin/sddm-select-wallpaper",
   "~/.local/bin/waybar-audio-output",
+  "~/.zshrc",
+  "~/.zprofile",
+  "~/.zshenv",
+  "~/.p10k.zsh",
+  "~/.bashrc",
+  "~/.profile",
   "/etc/sddm.conf",
+  "/etc/vconsole.conf",
+  "/etc/locale.conf",
+  "/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default",
   "/usr/share/sddm/themes/simple_sddm_2/theme.conf",
 ]
 

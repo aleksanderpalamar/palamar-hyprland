@@ -1,7 +1,22 @@
 [[entry]]
+source = "system/etc/locale.conf"
+target = "/etc/locale.conf"
+scope = "system"
+
+[[entry]]
 source = "system/etc/sddm.conf"
 target = "/etc/sddm.conf"
 scope = "system"
+
+[[entry]]
+source = "system/etc/vconsole.conf"
+target = "/etc/vconsole.conf"
+scope = "system"
+
+[[entry]]
+source = "home/.bashrc"
+target = "~/.bashrc"
+scope = "user"
 
 [[entry]]
 source = "config/Kvantum/kvantum.kvconfig"
@@ -1292,6 +1307,36 @@ scope = "user"
 source = "home/.local/share/hypr-themes/white/preview.png"
 target = "~/.local/share/hypr-themes/white/preview.png"
 scope = "user"
+
+[[entry]]
+source = "home/.p10k.zsh"
+target = "~/.p10k.zsh"
+scope = "user"
+
+[[entry]]
+source = "home/.profile"
+target = "~/.profile"
+scope = "user"
+
+[[entry]]
+source = "home/.zprofile"
+target = "~/.zprofile"
+scope = "user"
+
+[[entry]]
+source = "home/.zshenv"
+target = "~/.zshenv"
+scope = "user"
+
+[[entry]]
+source = "home/.zshrc"
+target = "~/.zshrc"
+scope = "user"
+
+[[entry]]
+source = "system/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default"
+target = "/usr/share/sddm/themes/simple_sddm_2/Backgrounds/default"
+scope = "system"
 
 [[entry]]
 source = "system/usr/share/sddm/themes/simple_sddm_2/theme.conf"

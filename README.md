@@ -64,16 +64,23 @@ O script é idempotente: rodar de novo não repete o que já está feito.
 2. Clona este repositório em `~/Projetos/palamar-hyprland`
 3. Instala o `yay`, se faltar
 4. Compila a CLI
-5. `packages install` — 172 pacotes dos repos, 20 do AUR, 6 flatpaks
-6. `apply` — os 164 links do `$HOME`
-7. Clona o tema do SDDM e aplica a parte de sistema com `sudo`
-8. Habilita o `sddm`
+5. `packages install` — 176 pacotes dos repos, 20 do AUR, 6 flatpaks
+6. Clona oh-my-zsh, powerlevel10k e os plugins; põe o zsh como shell de login
+7. `apply` — os links do `$HOME` (configs, scripts, temas, fontes, dotfiles do shell)
+8. `fc-cache` para registrar as fontes
+9. Clona o tema do SDDM e aplica a parte de sistema com `sudo`
+10. Habilita o `sddm`
 
-### O que fica de fora
+Ao fim, o ambiente está igual ao desta máquina: Hyprland, waybar, quickshell,
+mako, fuzzel, kitty, hyprlock, os 22 temas com seus fundos, o shell com o
+powerlevel10k, o teclado e o locale, e a tela de login com o mesmo fundo.
 
-- `~/Imagens/wallpapers` (1,1 GB) — restaurar do backup; `wallpapers.txt` lista o que havia
-- O fundo da tela de login — escolher com `sddm-select-wallpaper`
-- O boot (GRUB, UKI, dual-boot) e o DKMS do volante
+### O que o repositório não cobre
+
+- `~/Imagens/wallpapers` — coleção pessoal de 1,1 GB. O papel de parede **em uso**
+  vem dos temas e é aplicado normalmente; `wallpapers.txt` lista o resto.
+- O boot (GRUB, UKI, dual-boot) e o DKMS do volante, que pertencem à instalação
+  do Arch, não ao ambiente gráfico.
 
 ## Manutenção
 

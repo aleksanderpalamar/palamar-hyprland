@@ -1,0 +1,6 @@
+# Pacotes que o ambiente precisa mas que estao instalados como dependencia
+# de outro pacote. O 'pacman -Qqen' nao os lista, entao entram por aqui.
+noto-fonts
+zenity
+libnotify
+nm-connection-editor

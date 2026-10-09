@@ -68,6 +68,7 @@ kvantum
 kvantum-qt5
 less
 lib32-vulkan-radeon
+libnotify
 libpulse
 libspng
 libva-intel-driver
@@ -90,7 +91,9 @@ nano
 nautilus
 network-manager-applet
 networkmanager
+nm-connection-editor
 nodejs
+noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 npm
@@ -166,6 +169,7 @@ xdg-utils
 xf86-video-amdgpu
 xf86-video-ati
 yt-dlp
+zenity
 zig
 zram-generator
 zsh
