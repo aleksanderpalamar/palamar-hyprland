@@ -33,6 +33,7 @@ STATE = HOME / ".local/state/hypr-theme"
 STATE_FILE = STATE / "state.json"
 WALLPAPER_LINK = HOME / ".config/hypr/current/background"
 PICTURES = HOME / "Imagens"
+WALLPAPERS = PICTURES / "wallpapers"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}
 
 OUTPUTS = {
@@ -187,9 +188,10 @@ def theme_backgrounds(name):
 
 
 def personal_backgrounds():
-    if not PICTURES.is_dir():
+    folder = WALLPAPERS if WALLPAPERS.is_dir() else PICTURES
+    if not folder.is_dir():
         return []
-    return sorted(p for p in PICTURES.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS)
+    return sorted(p for p in folder.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS)
 
 
 def current_background():
