@@ -17,17 +17,6 @@ Column {
     readonly property PwNode sink: Pipewire.defaultAudioSink
     readonly property PwNode source: Pipewire.defaultAudioSource
 
-    // As listas guardam só id + nome: segurar o PwNode num modelo derruba o
-    // shell quando o PipeWire apaga o nó (lição do Model.js do Omarchy).
-    function rows(accept) {
-        const out = [];
-        for (const n of root.nodes) {
-            if (n && accept(n))
-                out.push({ id: n.id, name: String(n.name || "") });
-        }
-        return out;
-    }
-
     function resolve(row) {
         for (const n of root.nodes) {
             if (n && n.id === row.id && String(n.name || "") === row.name)
@@ -44,17 +33,35 @@ Column {
         return String(n.type || "").indexOf("Output") !== -1;
     }
 
-    readonly property var sinkRows: rows(n => n.audio && n.isSink && !n.isStream)
-    readonly property var sourceRows: rows(n => n.audio && !n.isSink && !n.isStream)
-    readonly property var streamRows: rows(n => n.audio && isPlaybackStream(n))
+    function pick(accept) {
+        const out = [];
+        for (const n of root.nodes) {
+            if (n && accept(n))
+                out.push(n);
+        }
+        return out;
+    }
+
+    readonly property var sinkNodes: pick(n => n.audio && n.isSink && !n.isStream)
+    readonly property var sourceNodes: pick(n => n.audio && !n.isSink && !n.isStream)
+    readonly property var streamNodes: pick(n => n.audio && isPlaybackStream(n))
+
+    // As listas guardam só id + nome: segurar o PwNode num modelo derruba o
+    // shell quando o PipeWire apaga o nó (lição do Model.js do Omarchy).
+    readonly property var sinkRows: sinkNodes.map(n => ({ id: n.id, name: String(n.name || "") }))
+    readonly property var sourceRows: sourceNodes.map(n => ({ id: n.id, name: String(n.name || "") }))
+    readonly property var streamRows: streamNodes.map(n => ({ id: n.id, name: String(n.name || "") }))
 
     PwObjectTracker {
-        objects: {
-            const list = [root.sink, root.source];
-            for (const row of root.sinkRows.concat(root.sourceRows, root.streamRows))
-                list.push(root.resolve(row));
-            return list.filter(n => n !== null);
-        }
+        objects: root.sinkNodes
+    }
+
+    PwObjectTracker {
+        objects: root.sourceNodes
+    }
+
+    PwObjectTracker {
+        objects: root.streamNodes
     }
 
     readonly property bool hasOutput: sink !== null && sink.audio !== null
